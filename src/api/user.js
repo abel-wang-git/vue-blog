@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import qs from 'qs'
 
-export function login(data) {
+export function toLogin(data) {
   return request({
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'

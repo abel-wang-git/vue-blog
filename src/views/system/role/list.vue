@@ -105,7 +105,6 @@ export default {
       })
     },
     delete(row) {
-      console.log(row)
       this.$message({
         message: '操作Success',
         type: 'success'
@@ -120,7 +119,6 @@ export default {
             response.data.forEach(function(power, index) {
               ids.push(power.id)
             })
-            console.log(ids)
             this.$refs.tree.setCheckedKeys(ids)
           }
         )
@@ -130,7 +128,6 @@ export default {
     },
     addPower() {
       var check = this.$refs.tree.getCheckedKeys()
-      console.log(this.dialogId)
       addPower({ powers: JSON.stringify(check), roleId: this.dialogId }).then(response => {
         this.$message({
           message: response.message,

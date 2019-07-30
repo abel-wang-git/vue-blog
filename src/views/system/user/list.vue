@@ -32,16 +32,9 @@
       :limit.sync="page.size"
       @pagination="nextPage"/>
     <el-dialog title="角色编辑" :visible.sync="dialogVisible" width="30%">
-      <el-tree
-        :props="props"
-        :load="loadNode"
-        lazy
-        show-checkbox
-        @check-change="handleCheckChange">
-      </el-tree>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="">确 定</el-button>
+        <!--<el-button type="primary" @click="">确 定</el-button>-->
       </span>
     </el-dialog>
   </div>
@@ -92,9 +85,6 @@ export default {
     openPowerDialog(row) {
       this.dialogVisible = true
     }
-    // loadNode(node, resolve) {
-    //
-    // }
   }
 
 }

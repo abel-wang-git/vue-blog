@@ -34,27 +34,6 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  {
-    path: '/article',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'article',
-    meta: { title: '文章管理', icon: 'dashboard' },
-    children: [
-      {
-        path: '/article/list',
-        name: 'articlelist',
-        component: () => import('@/views/article/list'),
-        meta: { title: '文章列表', icon: 'dashboard' }
-      },
-      {
-        path: 'article/add',
-        name: 'articleadd',
-        component: () => import('@/views/article/add'),
-        meta: { title: '文章添加', icon: 'dashboard', roles: ['admin2'] }
-      }
-    ]
-  },
   systemRoutes,
   { path: '*', redirect: '/404', hidden: true }
 ]
