@@ -54,16 +54,19 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-
-        const { roles, nickname, avatar } = data
-
+        // 重复请求说明这里出现问题了
+        const { roles, username, avatar } = data
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
 
         commit('SET_ROLES', roles)
-        commit('SET_NAME', nickname)
+        if (typeof (username) === 'undefined') {
+          commit('SET_NAME', '未知')
+        } else {
+          commit('SET_NAME', username)
+        }
         commit('SET_AVATAR', avatar)
         // commit('SET_AVATAR', avatar)
         // commit('SET_INTRODUCTION', introduction)
