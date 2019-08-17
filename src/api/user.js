@@ -33,3 +33,20 @@ export function getList(params) {
     data: qs.stringify(params)
   })
 }
+
+export function updateRole(params) {
+  return request({
+    url: '/user/add/role',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
+
+export function getRole(params) {
+  return request({
+    url: '/user/get/role',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}

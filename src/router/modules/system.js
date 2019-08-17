@@ -15,8 +15,7 @@ const sysRouter = {
       component: () => import('@/views/system/role/list'),
       name: 'role',
       meta: { title: '角色管理' }
-    }
-    ,
+    },
     {
       path: '/sys/user',
       component: () => import('@/views/system/user/list'),

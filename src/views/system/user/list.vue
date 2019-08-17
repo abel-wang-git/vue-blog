@@ -33,9 +33,10 @@
       @pagination="nextPage"
     />
     <el-dialog title="角色编辑" :visible.sync="dialogVisible" width="30%">
+      <el-tree ref="tree" :data="roles" show-checkbox node-key="id" highlight-current :props="props" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <!--<el-button type="primary" @click="">确 定</el-button>-->
+        <el-button type="primary" @click="updateRole">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -43,7 +44,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/user'
+import { getList, updateRole, getRole } from '@/api/user'
+import RoleApi from '@/api/role'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -54,11 +56,12 @@ export default {
       dialogVisible: false,
       props: {
         label: 'name',
-        children: 'zones'
+        children: ''
       },
-      roles: null,
+      roles: [],
       listLoading: true,
-      page: { total: 0, size: 0, pageNum: 0 }
+      page: { total: 0, size: 0, pageNum: 0 },
+      editorId: null
     }
   },
   created() {
@@ -84,7 +87,27 @@ export default {
       })
     },
     openPowerDialog(row) {
+      getRole({ userId: row.id }).then(response => {
+        var ids = []
+        response.data.forEach(function(role, index) {
+          ids.push(role.id)
+        })
+        this.$refs.tree.setCheckedKeys(ids)
+      })
+      this.editorId = row.id
+      RoleApi.getList({ where: '[]' }).then(respones => {
+        this.roles = respones.data.list
+      })
       this.dialogVisible = true
+    },
+    updateRole() {
+      var check = this.$refs.tree.getCheckedKeys()
+      console.log(check)
+      updateRole({ roles: JSON.stringify(check), userId: this.editorId}).then(respones => {
+        if (respones.code === 200) {
+          this.dialogVisible = false
+        }
+      })
     }
   }
 

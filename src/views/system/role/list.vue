@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { getList, powerList, rolePowerList, addPower } from '@/api/role'
+import RoleApi from '@/api/role'
 import Pagination from '@/components/Pagination'
 import checkPermission from '@/utils/permission'
 
@@ -82,7 +82,7 @@ export default {
     checkPermission,
     fetchData() {
       this.listLoading = true
-      getList({ where: '[]' }).then(response => {
+      RoleApi.getList({ where: '[]' }).then(response => {
         this.list = response.data.list
         this.page = response.data
         this.listLoading = false
@@ -90,7 +90,7 @@ export default {
     },
     nextPage() {
       this.listLoading = true
-      getList({ where: '[]', page: this.page.pageNum }).then(response => {
+      RoleApi.getList({ where: '[]', page: this.page.pageNum }).then(response => {
         this.list = response.data.list
         this.total = response.data.total
         setTimeout(() => {
@@ -112,9 +112,9 @@ export default {
       })
     },
     openPowerDialog(row) {
-      powerList().then(response => {
+      RoleApi.powerList().then(response => {
         this.powers = response.data
-        rolePowerList({ roleId: row.id }).then(
+        RoleApi.rolePowerList({ roleId: row.id }).then(
           response => {
             var ids = []
             response.data.forEach(function(power, index) {
@@ -129,7 +129,7 @@ export default {
     },
     addPower() {
       var check = this.$refs.tree.getCheckedKeys()
-      addPower({ powers: JSON.stringify(check), roleId: this.dialogId }).then(response => {
+      RoleApi.addPower({ powers: JSON.stringify(check), roleId: this.dialogId }).then(response => {
         this.$message({
           message: response.message,
           type: 'success'
