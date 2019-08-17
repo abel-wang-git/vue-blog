@@ -42,7 +42,6 @@ export function updateRole(params) {
   })
 }
 
-
 export function getRole(params) {
   return request({
     url: '/user/get/role',
