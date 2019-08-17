@@ -24,15 +24,12 @@ import CKEditor from '@ckeditor/ckeditor5-vue'
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
-
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false
+
+Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
 
 new Vue({
   el: '#app',

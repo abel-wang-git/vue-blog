@@ -41,9 +41,10 @@
       :total="page.total"
       :page.sync="page.pageNum"
       :limit.sync="page.size"
-      @pagination="nextPage"/>
+      @pagination="nextPage"
+    />
     <el-dialog title="添加权限" :visible.sync="dialogVisible" width="30%">
-      <el-tree :data="powers" show-checkbox node-key="id" ref="tree" highlight-current :props="etreeProps"/>
+      <el-tree ref="tree" :data="powers" show-checkbox node-key="id" highlight-current :props="etreeProps" />
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addPower">确 定</el-button>

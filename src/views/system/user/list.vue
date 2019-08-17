@@ -30,7 +30,8 @@
       :total="page.total"
       :page.sync="page.pageNum"
       :limit.sync="page.size"
-      @pagination="nextPage"/>
+      @pagination="nextPage"
+    />
     <el-dialog title="角色编辑" :visible.sync="dialogVisible" width="30%">
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -66,7 +67,7 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList({}).then(response => {
+      getList({ where: '[]' }).then(response => {
         this.list = response.data.list
         this.page = response.data
         this.listLoading = false
@@ -74,7 +75,7 @@ export default {
     },
     nextPage() {
       this.listLoading = true
-      getList({page: this.page.pageNum}).then(response => {
+      getList({ where: '[]', page: this.page.pageNum }).then(response => {
         this.list = response.data.list
         this.page.total = response.data.total
         setTimeout(() => {
