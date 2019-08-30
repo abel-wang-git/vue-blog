@@ -30,6 +30,8 @@ Vue.use(CKEditor)
 Vue.config.productionTip = false
 
 Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
+Vue.prototype.editorUpload = process.env.VUE_APP_BASE_API + 'upload'
+Vue.prototype.editorToken = process.env.VUE_APP_BASE_API + 'gettoken'
 
 new Vue({
   el: '#app',

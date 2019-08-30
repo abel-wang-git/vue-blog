@@ -98,8 +98,8 @@ export default {
           ]
         },
         cloudServices: {
-          tokenUrl: 'http://127.0.0.1:8080/gettoken',
-          uploadUrl: 'http://127.0.0.1:8080/upload'
+          tokenUrl: this.editorToken,
+          uploadUrl: this.editorUpload
         },
         table: {
           contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
@@ -108,6 +108,9 @@ export default {
     }
   },
   watch: {
+    content: function(val) {
+      this.editorData = val
+    },
     editorData: function() {
       this.$emit('getContent', this.editorData)
     }
