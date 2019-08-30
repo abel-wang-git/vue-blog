@@ -83,6 +83,8 @@ const actions = {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
         commit('SET_ROLES', [])
+        commit('SET_NAME', '')
+        commit('SET_AVATAR', '')
         removeToken()
         resetRouter()
         resolve()
