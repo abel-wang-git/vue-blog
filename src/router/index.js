@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import systemRoutes from './modules/system'
+import articleRouter from './modules/article'
 
 export const constantRoutes = [
   {
@@ -19,22 +20,35 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
-    path: '',
+    path: '/dashboard',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: 'noRedirect',
     children: [{
-      path: '/dashboard',
+      path: '',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: '医联通', icon: 'dashboard' }
     }]
+  },
+  {
+    path: '/',
+    name: 'blog',
+    component: () => import('@/views/blog/index'),
+    meta: { title: '医联通', icon: 'dashboard' }
+  },
+  {
+    path: '/article/add',
+    component: () => import('@/views/blog/add'),
+    name: 'AtricleAdd',
+    hidden: true,
+    meta: { title: '文章添加' }
   }
 ]
 
 export const asyncRoutes = [
   systemRoutes,
+  // articleRouter,
   { path: '*', redirect: '/404', hidden: true }
 ]
 
