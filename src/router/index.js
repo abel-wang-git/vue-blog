@@ -43,6 +43,13 @@ export const constantRoutes = [
     name: 'AtricleAdd',
     hidden: true,
     meta: { title: '文章添加' }
+  },
+  {
+    path: '/article/detail',
+    component: () => import('@/views/blog/detail'),
+    name: 'AtricleDetail',
+    hidden: true,
+    meta: { title: '文章详情' }
   }
 ]
 

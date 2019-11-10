@@ -31,6 +31,16 @@ const ArticleApi = {
       method: 'post',
       data: qs.stringify(params)
     })
+  },
+  detail: function detail(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/list/detail',
+      method: 'post',
+      data: qs.stringify(params)
+    })
   }
 }
 export default ArticleApi

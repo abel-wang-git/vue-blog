@@ -22,7 +22,7 @@
 
       <el-row>
         <el-col>
-          <el-form-item label="封面" prop="coverPicture">
+          <el-form-item label="封面" prop="">
             <el-upload
               class="avatar-uploader"
               :action="uploadUrl"
@@ -100,7 +100,6 @@ export default {
 
     getContent: function(data) {
       this.article.content = data
-      console.log(data)
     },
 
     onSubmit: function() {
