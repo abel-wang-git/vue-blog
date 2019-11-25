@@ -7,10 +7,10 @@
  * @module easy-image/easyimage
  */
 
-import Plugin from '@ckeditor/ckeditor5-core/src/plugin';
-import CloudServicesUploadAdapter from './cloudservicesuploadadapter';
-import Image from '@ckeditor/ckeditor5-image/src/image';
-import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
+import Plugin from '@ckeditor/ckeditor5-core/src/plugin'
+import CloudServicesUploadAdapter from './cloudservicesuploadadapter'
+import Image from '@ckeditor/ckeditor5-image/src/image'
+import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
 
 /**
  * The Easy Image feature, which makes the image upload in CKEditor 5 possible with virtually zero
@@ -36,21 +36,21 @@ import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
  * @extends module:core/plugin~Plugin
  */
 export default class EasyImage extends Plugin {
-	/**
+  /**
 	 * @inheritDoc
 	 */
-	static get requires() {
-		return [
-			CloudServicesUploadAdapter,
-			Image,
-			ImageUpload
-		];
-	}
+  static get requires() {
+    return [
+      CloudServicesUploadAdapter,
+      Image,
+      ImageUpload
+    ]
+  }
 
-	/**
+  /**
 	 * @inheritDoc
 	 */
-	static get pluginName() {
-		return 'EasyImage';
-	}
+  static get pluginName() {
+    return 'EasyImage'
+  }
 }

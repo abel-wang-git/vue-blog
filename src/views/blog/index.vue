@@ -6,7 +6,7 @@
         <span class="preblank">&nbsp;</span>
       </span>
       <span>{{ item.cmd }}</span>
-      <div v-for="(result, index) in item.results" :key="index">
+      <div v-for="(result,i) in item.results" :key="i">
         {{ result.title }}
         {{ result.articleId }}
       </div>

@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '医联通后台管理系统',
+  title: '逝者如斯夫,不舍昼夜',
 
   /**
    * @type {boolean} true | false

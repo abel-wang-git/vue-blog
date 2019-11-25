@@ -41,8 +41,6 @@ import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
 import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave'
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount'
 
-import CodeBlock from './plugin/codelight/codeblock'
-
 export default {
   name: 'Editor',
   props: {
@@ -78,7 +76,6 @@ export default {
           Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize,
           // PasteFromOffice,
           Autoformat, WordCount, Autosave,
-          CodeBlock,
           TodoList, List, PageBreak,
           Table, TableToolbar
         ],
@@ -93,7 +90,6 @@ export default {
             'alignment',
             'highlight',
             'blockQuote',
-            // 'codeblock',
             'imageUpload',
             // 'ckfinder',
             'mediaEmbed',
@@ -172,20 +168,17 @@ export default {
             }
           ]
         },
-        // wordCount: {
-        //   onUpdate: stats => {
-        //     console.log(stats)
-        //   }
-        // },
+        wordCount: {
+          onUpdate: stats => {
+            console.log(stats)
+          }
+        }
         // autosave: {
         //   save(editor) {
         //     // todo
         //     console.log(editor)
         //   }
         // },
-        codeblock: {
-          languages: ['java', 'xml', 'js', 'php']
-        }
       }
     }
   },

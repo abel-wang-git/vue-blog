@@ -29,9 +29,10 @@
               :headers="token"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload">
+              :before-upload="beforeAvatarUpload"
+            >
               <img v-if="article.coverPicture" :src="article.coverPicture" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
         </el-col>
