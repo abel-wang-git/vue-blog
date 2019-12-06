@@ -6,7 +6,7 @@
 
 <script>
 import ArticleApi from '@/api/article'
-
+import Prism from 'prismjs'
 export default {
   name: 'Detail',
   data() {
@@ -20,6 +20,7 @@ export default {
       if (response.code === 200) {
         this.list = response.data.list
         this.content = response.data.content
+        Prism.highlightAll()
       }
     })
   }

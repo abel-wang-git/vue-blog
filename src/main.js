@@ -16,15 +16,10 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import CKEditor from '@ckeditor/ckeditor5-vue'
-/**
- * If you don't want to use mock-server
- * you want to use MockJs for mock api
- * you can execute: mockXHR()
- *
- * Currently MockJs will be used in the production environment,
- * please remove it before going online! ! !
- */
-// set ElementUI lang to EN
+
+import Prism from 'prismjs'
+import 'prism-themes/themes/prism-atom-dark.css'
+
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false
@@ -32,7 +27,7 @@ Vue.config.productionTip = false
 Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
 Vue.prototype.editorUpload = process.env.VUE_APP_BASE_API + 'upload'
 Vue.prototype.editorToken = process.env.VUE_APP_BASE_API + 'gettoken'
-
+Prism.highlightAll();
 new Vue({
   el: '#app',
   router,

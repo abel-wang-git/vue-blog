@@ -40,7 +40,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
 import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave'
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount'
-
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
 export default {
   name: 'Editor',
   props: {
@@ -77,7 +77,8 @@ export default {
           // PasteFromOffice,
           Autoformat, WordCount, Autosave,
           TodoList, List, PageBreak,
-          Table, TableToolbar
+          Table, TableToolbar,
+          CodeBlock
         ],
         toolbar: {
           items: [
@@ -88,6 +89,7 @@ export default {
             'undo',
             'redo',
             'alignment',
+            'codeBlock',
             'highlight',
             'blockQuote',
             'imageUpload',
@@ -105,6 +107,13 @@ export default {
           ]
         },
         viewportTopOffset: 100,
+        codeBlock: {
+          languages: [
+            { language: 'css', label: 'CSS' },
+            { language: 'xml', label: 'HTML/XML' },
+            { language: 'java', label: 'java' }
+          ]
+        },
         highlight: {
           options: [
             {

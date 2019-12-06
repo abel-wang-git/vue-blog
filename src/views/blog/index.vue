@@ -39,7 +39,6 @@ export default {
         ArticleApi.list().then(response => {
           if (response.code === 200) {
             if (response.data.total > 0) {
-              console.log(response)
               his.results = response.data.list
             }
           }
@@ -50,7 +49,6 @@ export default {
         this.$router.push({ path: '/article/add' })
       }
       if (this.command.split(' ')[0] === 'cat') {
-        console.log(this.command.split(' ')[1])
         this.$router.push({ path: '/article/detail', query: { id: this.command.split(' ')[1] }})
       }
       this.command = ''
