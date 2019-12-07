@@ -18,8 +18,8 @@ import '@/permission' // permission control
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import Prism from 'prismjs'
-import 'prism-themes/themes/prism-atom-dark.css'
 
+Prism.highlightAll()
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false
@@ -27,7 +27,7 @@ Vue.config.productionTip = false
 Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
 Vue.prototype.editorUpload = process.env.VUE_APP_BASE_API + 'upload'
 Vue.prototype.editorToken = process.env.VUE_APP_BASE_API + 'gettoken'
-Prism.highlightAll();
+// Prism.highlightAll();
 new Vue({
   el: '#app',
   router,
