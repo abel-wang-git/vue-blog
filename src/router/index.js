@@ -9,11 +9,27 @@ import systemRoutes from './modules/system'
 
 export const constantRoutes = [
   {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'blog', icon: 'dashboard' }
+    }]
+  },
+  {
     path: '/',
     name: 'blog',
     hidden: true,
     component: () => import('@/views/blog/index'),
-    meta: { title: '医联通', icon: 'dashboard' }
+    meta: { title: 'blog', icon: 'dashboard' }
   },
   {
     path: '/article/detail',
@@ -23,27 +39,9 @@ export const constantRoutes = [
     meta: { title: '文章详情' }
   },
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-
-  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
-  },
-
-  {
-    path: '/dashboard',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '医联通', icon: 'dashboard' }
-    }]
   }
 ]
 

@@ -57,6 +57,7 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
+import Vue from 'vue'
 
 export default {
   components: { Editor },
@@ -87,7 +88,7 @@ export default {
 
   methods: {
     handleAvatarSuccess(res, file) {
-      this.article.coverPicture = 'http://127.0.0.1:8080/' + res.data
+      this.article.coverPicture = Vue.prototype.imageHost + res.data
     },
 
     beforeAvatarUpload(file) {

@@ -1,5 +1,5 @@
 import { toLogin, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken, setName, removeName } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -64,10 +64,8 @@ const actions = {
         commit('SET_ROLES', roles)
         if (typeof (username) === 'undefined') {
           commit('SET_NAME', '未知')
-          setName('未知')
         } else {
           commit('SET_NAME', username)
-          setName(username)
         }
         commit('SET_AVATAR', avatar)
         // commit('SET_AVATAR', avatar)
@@ -88,7 +86,6 @@ const actions = {
         commit('SET_NAME', '')
         commit('SET_AVATAR', '')
         removeToken()
-        removeName()
         resetRouter()
         resolve()
       }).catch(error => {
