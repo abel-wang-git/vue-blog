@@ -9,6 +9,20 @@ import systemRoutes from './modules/system'
 
 export const constantRoutes = [
   {
+    path: '/',
+    name: 'blog',
+    hidden: true,
+    component: () => import('@/views/blog/index'),
+    meta: { title: '医联通', icon: 'dashboard' }
+  },
+  {
+    path: '/article/detail',
+    component: () => import('@/views/blog/detail'),
+    name: 'AtricleDetail',
+    hidden: true,
+    meta: { title: '文章详情' }
+  },
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -21,7 +35,7 @@ export const constantRoutes = [
   },
 
   {
-    path: '',
+    path: '/dashboard',
     component: Layout,
     redirect: '/dashboard',
     children: [{
@@ -34,26 +48,13 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-  {
-    path: '/blog',
-    name: 'blog',
-    hidden: true,
-    component: () => import('@/views/blog/index'),
-    meta: { title: '医联通', icon: 'dashboard' }
-  },
+
   {
     path: '/article/add',
     component: () => import('@/views/blog/add'),
     name: 'AtricleAdd',
     hidden: true,
     meta: { title: '文章添加' }
-  },
-  {
-    path: '/article/detail',
-    component: () => import('@/views/blog/detail'),
-    name: 'AtricleDetail',
-    hidden: true,
-    meta: { title: '文章详情' }
   },
   systemRoutes,
   { path: '*', redirect: '/404', hidden: true }

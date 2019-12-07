@@ -17,9 +17,6 @@ import '@/permission' // permission control
 
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
-import Prism from 'prismjs'
-
-Prism.highlightAll()
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false

@@ -70,7 +70,6 @@ export default {
     fetchData() {
       this.listLoading = true
       AppApi.getList().then(response => {
-        console.log(response.data.list)
         this.list = response.data.list
         this.page = response.data
         this.listLoading = false
