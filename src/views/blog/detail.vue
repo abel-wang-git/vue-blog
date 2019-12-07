@@ -1,13 +1,11 @@
 <template>
-  <div v-html="content.content">
-    <pre>
-      <code class="language-java">
-        public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("123456"));
-      }
-      </code>
-    </pre>
-  </div>
+  <el-row>
+    <el-col :span="12" :offset="6">
+      <h1>{{list.title}}</h1>
+      <h1>{{list}}</h1>
+      <div v-html="content.content"></div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
