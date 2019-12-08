@@ -36,6 +36,13 @@ const sysRouter = {
       meta: { title: 'app添加' }
     },
     {
+      path: '/sys/white/list',
+      component: () => import('@/views/system/whiteList/list'),
+      name: 'whiteList',
+      hidden: false,
+      meta: { title: '白名单管理' }
+    },
+    {
       path: '/app/history/add',
       component: () => import('@/views/system/app/release'),
       name: 'historyadd',

@@ -26,7 +26,6 @@ Vue.prototype.imageHost = process.env.VUE_APP_IMAGE_HOST
 Vue.prototype.editorUpload = process.env.VUE_APP_BASE_API + 'upload'
 Vue.prototype.editorToken = process.env.VUE_APP_BASE_API + 'gettoken'
 
-console.log( process.env)
 new Vue({
   el: '#app',
   router,
