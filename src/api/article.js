@@ -27,7 +27,7 @@ const ArticleApi = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      url: '/article/update',
+      url: '/article/list/update',
       method: 'post',
       data: qs.stringify(params)
     })

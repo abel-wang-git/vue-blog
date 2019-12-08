@@ -12,8 +12,13 @@
       <el-row>
         <el-col :span="10">
           <el-form-item label="分类" prop="classId">
-            <el-select v-model="article.classId" placeholder="文章分类">
-              <el-option v-for="(item, index) in classOption" :key="index" :value="item.value" :label="item.label"/>
+            <el-select v-model="article.classId" placeholder="">
+              <el-option
+                v-for="(item, index) in classOption"
+                :key="index"
+                :value="item.value"
+                :label="item.label"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -45,9 +50,9 @@
         </el-col>
       </el-row>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button type="primary" @click="onSubmit">修改</el-button>
       </el-form-item>
+      <el-input v-model="article.id" type="hidden" />
     </el-form>
   </div>
 </template>
@@ -63,11 +68,7 @@ export default {
   data() {
     return {
       article: {
-        title: '',
-        content: '',
-        classId: '',
-        id: '',
-        coverPicture: ''
+        content: ''
       },
       token: null,
       rules: {
@@ -94,10 +95,18 @@ export default {
       'Authorization': 'Bearer ' + sessionStorage.getItem('vue_admin_template_token')
     }
   },
-
+  created() {
+    ArticleApi.detail(this.$route.query).then(response => {
+      if (response.code === 200) {
+        this.article = response.data.list
+        this.article.content = response.data.content.content
+      }
+    })
+  },
   methods: {
     handleAvatarSuccess(res, file) {
-      this.article.coverPicture = this.$imageHost + res.data
+      console.log(Vue.prototype)
+      this.article.coverPicture = Vue.prototype.imageHost + res.data
     },
 
     beforeAvatarUpload(file) {
@@ -116,31 +125,15 @@ export default {
     onSubmit: function() {
       this.$refs.article.validate(valid => {
         if (valid) {
-          if (!this.article.id) {
-            ArticleApi.save(this.article).then(response => {
-              Message({
-                message: response.message || 'success',
-                type: 'success',
-                duration: 2 * 1000
-              })
-              if (response.code === 200) {
-                this.article.id = response.data
-                this.$router.go(-1)
-              }
+          ArticleApi.update(this.article).then(response => {
+            Message({
+              message: response.message || 'success',
+              type: 'success',
+              duration: 2 * 1000
             })
-          } else {
-            ArticleApi.update(this.article).then(response => {
-              Message({
-                message: response.message || 'success',
-                type: 'success',
-                duration: 2 * 1000
-              })
-              if (response.code === 200) {
-                this.article.id = response.data
-                this.$router.go(-1)
-              }
-            })
-          }
+            if (response.code === 200) {
+            }
+          })
         }
       })
     }

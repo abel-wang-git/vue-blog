@@ -22,7 +22,7 @@ Vue.use(CKEditor)
 Vue.config.productionTip = false
 
 Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
-Vue.prototype.imageHost = 'http://www.wanghuiwen.com:1025/'
+Vue.prototype.imageHost = process.env.IMAGE_HOST
 Vue.prototype.editorUpload = process.env.VUE_APP_BASE_API + 'upload'
 Vue.prototype.editorToken = process.env.VUE_APP_BASE_API + 'gettoken'
 // Prism.highlightAll();

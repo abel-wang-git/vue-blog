@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import systemRoutes from './modules/system'
+import articleRouter from './modules/article'
 
 export const constantRoutes = [
   {
@@ -46,14 +47,7 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
-
-  {
-    path: '/article/add',
-    component: () => import('@/views/blog/add'),
-    name: 'AtricleAdd',
-    hidden: true,
-    meta: { title: '文章添加' }
-  },
+  articleRouter,
   systemRoutes,
   { path: '*', redirect: '/404', hidden: true }
 ]

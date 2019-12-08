@@ -48,6 +48,9 @@ export default {
       if (this.command === 'add') {
         this.$router.push({ path: '/article/add' })
       }
+      if (this.command.split(' ')[0] === 'update') {
+        this.$router.push({ path: '/article/update', query: { id: this.command.split(' ')[1] }})
+      }
       if (this.command.split(' ')[0] === 'cat') {
         this.$router.push({ path: '/article/detail', query: { id: this.command.split(' ')[1] }})
       }
