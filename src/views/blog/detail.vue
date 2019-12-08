@@ -1,15 +1,16 @@
 <template>
   <div class="app-container">
-      <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
-        <h1>{{ list.title }}</h1>
-        <h5>{{ list.createTime }}</h5>
-        <div v-html="content.content" />
-      </el-col>
+    <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
+      <h1>{{ list.title }}</h1>
+      <h5>{{ list.createTime }}</h5>
+      <div class="ck-content" v-html="content.content" />
+    </el-col>
   </div>
 </template>
 
 <script>
 import ArticleApi from '@/api/article'
+import '@/styles/content-styles.css'
 import Prism from 'prismjs'
 
 export default {
