@@ -17,7 +17,9 @@
     >
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          <router-link :to="{path:'/article/detail',query:{id: scope.row.articleId}}">
+            {{ scope.row.articleId }}
+          </router-link>
         </template>
       </el-table-column>
       <el-table-column label="账号">

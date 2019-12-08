@@ -1,7 +1,7 @@
 {
   "plugins": [
     ["prismjs", {
-      "languages": ["javascript", "css", "java"],
+      "languages": ["javascript", "css", "java", "html" , "python"],
       "plugins": ["line-numbers"],
       "theme": "tomorrow",
       "css": true

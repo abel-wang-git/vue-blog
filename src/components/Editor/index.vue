@@ -111,7 +111,11 @@ export default {
           languages: [
             { language: 'css', label: 'CSS' },
             { language: 'xml', label: 'HTML/XML' },
-            { language: 'java', label: 'java' }
+            { language: 'java', label: 'java' },
+            { language: 'html', label: 'html' },
+            { language: 'python', label: 'python' },
+            { language: 'javascript', label: 'js' },
+            { language: 'dart', label: 'dart' }
           ]
         },
         highlight: {

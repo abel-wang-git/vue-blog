@@ -1,11 +1,11 @@
 <template>
-  <el-row>
-    <el-col :span="12" :offset="6">
-      <h1>{{list.title}}</h1>
-      <h5>{{list.createTime}}</h5>
-      <div v-html="content.content"></div>
-    </el-col>
-  </el-row>
+  <div class="app-container">
+      <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
+        <h1>{{ list.title }}</h1>
+        <h5>{{ list.createTime }}</h5>
+        <div v-html="content.content" />
+      </el-col>
+  </div>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   name: 'Detail',
   data() {
     return {
-      list: null,
+      list: {},
       content: ''
     }
   },
