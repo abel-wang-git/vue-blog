@@ -44,6 +44,7 @@
     "@ckeditor/ckeditor5-vue": "^1.0.1",
     "@ckeditor/ckeditor5-word-count": "^16.0.0",
     "axios": "^0.19.0",
+    "babel-plugin-prismjs": "^1.1.1",
     "element-ui": "2.7.2",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
