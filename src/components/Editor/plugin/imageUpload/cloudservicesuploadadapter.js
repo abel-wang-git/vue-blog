@@ -36,7 +36,7 @@ export default class CloudServicesUploadAdapter extends Plugin {
     const editor = this.editor
 
     const token = { value: 'Bearer ' + sessionStorage.getItem('vue_admin_template_token') }
-    const uploadUrl = 'http://localhost:8080/upload'
+    const uploadUrl = process.env.VUE_APP_IMAGE_UPLOAD_URL
 
     if (!token) {
       return

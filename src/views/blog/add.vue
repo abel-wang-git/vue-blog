@@ -97,7 +97,7 @@ export default {
 
   methods: {
     handleAvatarSuccess(res, file) {
-      this.article.coverPicture = Vue.prototype.imageHost + res.data
+      this.article.coverPicture = process.env.VUE_APP_IMAGE_HOST + res.data
     },
 
     beforeAvatarUpload(file) {
