@@ -39,7 +39,6 @@ const actions = {
         setToken(data.token)
         resolve()
       }).catch(error => {
-        console.log(error)
         reject(error)
       })
     })

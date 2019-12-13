@@ -61,7 +61,6 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
-import Vue from 'vue'
 
 export default {
   components: { Editor },
@@ -105,7 +104,6 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      console.log(Vue.prototype)
       this.article.coverPicture = process.env.VUE_APP_IMAGE_HOST + res.data
     },
 
@@ -126,12 +124,12 @@ export default {
       this.$refs.article.validate(valid => {
         if (valid) {
           ArticleApi.update(this.article).then(response => {
-            Message({
-              message: response.message || 'success',
-              type: 'success',
-              duration: 2 * 1000
-            })
             if (response.code === 200) {
+              Message({
+                message: response.message || 'success',
+                type: 'success',
+                duration: 2 * 1000
+              })
             }
           })
         }

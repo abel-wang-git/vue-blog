@@ -32,10 +32,8 @@ export default {
     }
   },
   created() {
-    console.log('123')
     this.id = this.$route.params.id
     AppApi.appIndex({ id: this.id }).then(response => {
-      console.log(response)
       if (response.code === 200) {
         this.app = response.data.app
         this.history = response.data.history

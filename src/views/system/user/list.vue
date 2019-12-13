@@ -102,7 +102,6 @@ export default {
     },
     updateRole() {
       var check = this.$refs.tree.getCheckedKeys()
-      console.log(check)
       updateRole({ roles: JSON.stringify(check), userId: this.editorId }).then(respones => {
         if (respones.code === 200) {
           this.dialogVisible = false

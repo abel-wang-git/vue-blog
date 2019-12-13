@@ -13,7 +13,7 @@
         <el-col :span="10">
           <el-form-item label="分类" prop="classId">
             <el-select v-model="article.classId" placeholder="文章分类">
-              <el-option v-for="(item, index) in classOption" :key="index" :value="item.value" :label="item.label"/>
+              <el-option v-for="(item, index) in classOption" :key="index" :value="item.value" :label="item.label" />
             </el-select>
           </el-form-item>
         </el-col>
@@ -56,7 +56,6 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
-import Vue from 'vue'
 
 export default {
   components: { Editor },

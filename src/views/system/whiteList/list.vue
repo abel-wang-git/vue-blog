@@ -114,7 +114,6 @@ export default {
       })
     },
     deleteWhite(row) {
-      console.log(row)
       Whitelist.del({ id: row.url }).then(response => {
         if (response.code === 200) {
           this.fetchData()

@@ -14,40 +14,34 @@
         </el-col>
       </div>
       <div class="page-2 page">
-        <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+        <el-col
+          :xs="{span: 18, offset: 3}"
+          :sm="{span: 18, offset: 3}"
+          :md="{span: 18, offset: 3}"
+          :lg="{span: 18, offset: 3}"
+          :xl="{span: 18, offset: 3}"
+        >
           <el-col
-            :xs="{span: 18, offset: 3}"
-            :sm="{span: 18, offset: 3}"
-            :md="{span: 18, offset: 3}"
-            :lg="{span: 18, offset: 3}"
-            :xl="{span: 18, offset: 3}"
+            v-for="article in articles"
+            :key="article.id"
+            :xs="{span: 6}"
+            :sm="{span: 6}"
+            :md="{span: 6}"
+            :lg="{span: 6}"
+            :xl="{span: 6}"
           >
-            <el-col
-              v-for="article in articles"
-              :key="article.id"
-              :xs="{span: 6}"
-              :sm="{span: 6}"
-              :md="{span: 6}"
-              :lg="{span: 6}"
-              :xl="{span: 6}"
-            >
-              <div class="article-card">
-                <el-card :body-style="{ padding: '0px' }">
-                  <el-image
-                    :src="article.url"
-                    fit="widthFix"
-                  />
-                  <div style="padding: 14px;">
-                    <span>{{ article.title }}</span>
-                    <div class="bottom clearfix">
-                      <time class="time">2019-11-11</time>
-                    </div>
-                  </div>
-                </el-card>
+            <div class="article-card">
+              <el-image
+                :src="article.url"
+                fit="cover"
+              />
+              <div>
+                <span>{{ article.title }}</span>
+                <time class="time">2019-11-11</time>
               </div>
-            </el-col>
+            </div>
           </el-col>
-        </ul>
+        </el-col>
       </div>
     </div>
   </div>
@@ -67,14 +61,24 @@ export default {
         { id: 4, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
         { id: 5, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
         { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
-        { id: 7, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' }
-      ]
+        { id: 8, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 9, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 10, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 11, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 12, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 13, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        { id: 14, title: 123, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' }
+      ],
+      opts: {
+        start: 0,
+        dir: 'v',
+        duration: 500,
+        beforeChange: function(currentSlideEl, currenIndex, nextIndex) {
+        },
+        afterChange: function(currentSlideEl, currenIndex) {
+        }
+      }
+
     }
   },
   methods: {
@@ -126,7 +130,9 @@ export default {
     color: white;
     font-size: 15px;
   }
-  .article-card{
-    padding: 10px;
+
+  .article-card {
+    margin: 10px;
+    border: solid 1px #bfbfbf;
   }
 </style>

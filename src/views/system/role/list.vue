@@ -99,7 +99,6 @@ export default {
       })
     },
     update(row) {
-      console.log(row)
       this.$message({
         message: '操作Success',
         type: 'success'

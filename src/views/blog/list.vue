@@ -60,7 +60,7 @@ export default {
       roles: [],
       listLoading: true,
       page: { total: 0, size: 0, pageNum: 0 },
-      editorId: null,
+      editorId: null
 
     }
   },
