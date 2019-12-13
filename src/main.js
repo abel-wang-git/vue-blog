@@ -15,8 +15,12 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import 'animate.css'
+import 'fullpage-vue/src/fullpage.css'
+import VueFullpage from 'fullpage-vue'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
+Vue.use(VueFullpage)
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false

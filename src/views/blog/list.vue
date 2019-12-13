@@ -3,7 +3,7 @@
     <el-header>
       <el-row>
         <el-col :span="2">
-          <router-link :to="{path: '/article/add'}"><el-button size="mini" type="success" plain>添加app</el-button></router-link>
+          <router-link :to="{path: '/article/add'}"><el-button size="mini" type="success" plain>添加文章</el-button></router-link>
         </el-col>
       </el-row>
     </el-header>

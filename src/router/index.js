@@ -26,10 +26,17 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/',
+    path: '/console',
     name: 'blog',
     hidden: true,
     component: () => import('@/views/blog/index'),
+    meta: { title: 'blog', icon: 'dashboard' }
+  },
+  {
+    path: '/',
+    name: 'blogindex',
+    hidden: true,
+    component: () => import('@/views/blog/blog'),
     meta: { title: 'blog', icon: 'dashboard' }
   },
   {
@@ -60,7 +67,6 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
