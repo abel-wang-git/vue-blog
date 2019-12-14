@@ -7,14 +7,18 @@
             <el-input v-model="article.title" />
           </el-form-item>
         </el-col>
-      </el-row>
-
-      <el-row>
         <el-col :span="10">
           <el-form-item label="分类" prop="classId">
             <el-select v-model="article.classId" placeholder="文章分类">
               <el-option v-for="(item, index) in classOption" :key="index" :value="item.value" :label="item.label" />
             </el-select>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="20">
+          <el-form-item label="内容" prop="content">
+            <editor v-model="article.content" :content="article.content" @getContent="getContent" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -36,14 +40,6 @@
           </el-form-item>
         </el-col>
       </el-row>
-
-      <el-row>
-        <el-col :span="20">
-          <el-form-item label="内容" prop="content">
-            <editor v-model="article.content" :content="article.content" @getContent="getContent" />
-          </el-form-item>
-        </el-col>
-      </el-row>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即创建</el-button>
         <el-button @click="$router.go(-1)">取消</el-button>
@@ -56,6 +52,7 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
+import '@/styles/ck-styles.css'
 
 export default {
   components: { Editor },

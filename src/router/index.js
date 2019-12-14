@@ -47,6 +47,13 @@ export const constantRoutes = [
     meta: { title: '文章详情' }
   },
   {
+    path: '/article/add',
+    component: () => import('@/views/blog/add'),
+    name: 'ArticleAdd',
+    hidden: true,
+    meta: { title: '文章添加' }
+  },
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

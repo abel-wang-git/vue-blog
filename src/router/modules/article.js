@@ -18,13 +18,6 @@ const articleRouter = {
       meta: { title: '文章列表' }
     },
     {
-      path: '/article/add',
-      component: () => import('@/views/blog/add'),
-      name: 'ArticleAdd',
-      hidden: true,
-      meta: { title: '文章添加' }
-    },
-    {
       path: '/article/update',
       component: () => import('@/views/blog/update'),
       name: 'ArticleUpdate',
