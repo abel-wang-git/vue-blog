@@ -78,7 +78,6 @@ export default {
           CodeBlock
         ],
         toolbar: {
-          viewportTopOffset: 50,
           items: [
             'heading',
             'bold',

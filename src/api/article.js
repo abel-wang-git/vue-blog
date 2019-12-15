@@ -12,12 +12,32 @@ const ArticleApi = {
       data: qs.stringify(params)
     })
   },
+  classList: function getList(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/class/list',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
   save: function save(params) {
     return request({
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       url: '/article/list/add',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+  addClass: function addClass(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/class/add',
       method: 'post',
       data: qs.stringify(params)
     })

@@ -115,8 +115,7 @@ export default {
       if (this.items.length > 0) {
         this.items = []
       } else {
-        this.items.push('分类')
-        this.items.push('标签')
+        this.items.push('全部')
         this.items.push('添加')
       }
     },
@@ -254,6 +253,7 @@ export default {
     right: 25px;
     text-align: center;
     line-height: 50px;
+    cursor: pointer;
   }
 
   .add-icon {
@@ -264,6 +264,7 @@ export default {
     position: fixed;
     bottom: 75px;
     right: 25px;
+    cursor: pointer;
   }
 
   .menu-list {
@@ -274,5 +275,6 @@ export default {
     height: 50px;
     line-height: 50px;
     text-align: center;
+    cursor: pointer;
   }
 </style>

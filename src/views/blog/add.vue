@@ -6,31 +6,35 @@
           <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
             <input v-model="article.title" class="title-input" placeholder="标题">
             <editor v-model="article.content" :content="article.content" @getContent="getContent" />
-            <el-row class="article-add-setting">
-              <el-upload
-                class="avatar-uploader setting-item"
-                :action="uploadUrl"
-                :headers="token"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :before-upload="beforeAvatarUpload"
-              >
-                <img v-if="article.coverPicture" :src="article.coverPicture" class="avatar">
-                <div v-else class="avatar-uploader-icon">
-                  <div class="avatar-uploader-text">
-                    <i class="el-icon-plus" />选择封面
+            <el-row :gutter="20" class="article-add-setting">
+              <el-col :span="5">
+
+                <el-upload
+                  class="avatar-uploader"
+                  :action="uploadUrl"
+                  :headers="token"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+                >
+                  <img v-if="article.coverPicture" :src="article.coverPicture" class="avatar">
+                  <div v-else class="avatar-uploader-icon">
+                    <div class="avatar-uploader-text">
+                      <i class="el-icon-plus" />选择封面
+                    </div>
                   </div>
-                </div>
-              </el-upload>
-              <el-select
-                v-model="article.classId"
-                filterable
-                allow-create
-                placeholder="文章分类"
-                class="setting-item"
-              >
-                <el-option v-for="(item, index) in classOption" :key="index" :value="item.value" :label="item.label" />
-              </el-select>
+                </el-upload>
+              </el-col>
+              <el-col class="article-types" style="display: inline-block" :span="16">
+                <el-form-item label="文章分类">
+                  <el-radio-group v-model="article.classId">
+                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{item.className}}</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">
+                <el-button size="mini" type="success" @click="openAddDialog">添加分类</el-button>
+              </el-col>
             </el-row>
           </el-col>
 
@@ -40,11 +44,19 @@
       <el-row class="article-add-bottom">
         <el-col class="article-add" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
           <el-button type="primary" @click="onSubmit">保存</el-button>
-          <el-button type="primary">预览</el-button>
-          <el-button>取消</el-button>
+          <router-link :to="{path:'/'}"><el-button>取消</el-button></router-link>
         </el-col>
       </el-row>
     </el-form>
+    <el-dialog title="添加分类" :visible.sync="dialogVisible" width="30%">
+      <el-row>
+        <el-input v-model="articleClass" />
+      </el-row>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addArticleClass">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,23 +77,17 @@ export default {
         id: '',
         coverPicture: ''
       },
+      articleClass: null,
       token: null,
+      dialogVisible: false,
+      dialogPreview: false,
       rules: {
         title: [{ required: true, message: '请添加标题', trigger: 'blur' }],
         classId: [{ required: true, message: '请选择分类', trigger: 'blur' }],
         coverPicture: [{ required: true, message: '封面不能为空', trigger: 'blur' }],
         content: [{ required: true, message: '内容不能为空', trigger: 'blur' }]
       },
-      classOption: [
-        {
-          value: 1,
-          label: '文章'
-        },
-        {
-          value: 2,
-          label: '笔记'
-        }
-      ]
+      classOption: []
     }
   },
 
@@ -90,12 +96,29 @@ export default {
       'Authorization': 'Bearer ' + sessionStorage.getItem('vue_admin_template_token')
     }
     window.addEventListener('scroll', this.handleScroll, true)
+    this.getClassList()
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   },
 
   methods: {
+    addArticleClass() {
+      ArticleApi.addClass({ className: this.articleClass }).then(response => {
+        if (response.code === 200) {
+          this.getClassList()
+          this.articleClass = null
+          this.dialogVisible = false
+        }
+      })
+    },
+    getClassList() {
+      ArticleApi.classList().then(response => {
+        if (response.code === 200) {
+          this.classOption = response.data
+        }
+      })
+    },
     handleAvatarSuccess(res, file) {
       this.article.coverPicture = process.env.VUE_APP_IMAGE_HOST + res.data
     },
@@ -144,14 +167,18 @@ export default {
         }
       })
     },
+    openAddDialog() {
+      this.articleClass = null
+      this.dialogVisible = true
+    },
     handleScroll() {
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      // console.log(document.querySelector('.ck-sticky-panel__content'))
-      var offsetTop = document.querySelector('.ck-sticky-panel').offsetTop
-      console.log(offsetTop)
+      // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      // // console.log(document.querySelector('.ck-sticky-panel__content'))
+      // var offsetTop = document.querySelector('.ck-sticky-panel').offsetTop
+      // console.log(offsetTop)
       // if (scrollTop > 100) {
       //   // offsetTop = 300 - Number(scrollTop)
-      //   document.querySelector('.ck-sticky-panel__content').style.position = 'fixed!important'
+      //   document.querySelector('.ck-sticky-panel__content').style.position = 'fixed'
       //   document.querySelector('.ck-sticky-panel__content').style.top = '0'
       // } else {
       //   document.querySelector('.ck-sticky-panel__content').style.top = offsetTop + 'px'
@@ -171,9 +198,6 @@ export default {
     border-radius: 6px;
     cursor: pointer;
     float: left;
-  }
-  .setting-item{
-    margin: 10px;
   }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
