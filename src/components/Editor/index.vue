@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <ckeditor v-model="editorData" :editor="editor" :config="editorConfig" @ready="onEditorReady" />
-  </div>
+  <ckeditor v-model="editorData" :editor="editor" :config="editorConfig" @ready="onEditorReady" />
 </template>
 
 <script>
@@ -40,7 +38,7 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
 import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave'
 import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount'
-import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock'
 export default {
   name: 'Editor',
   props: {
@@ -54,7 +52,6 @@ export default {
       editor: ClassicEditor,
       editorData: this.content,
       editorConfig: {
-        height: 300,
         plugins: [
           EssentialsPlugin,
           BoldPlugin,
@@ -81,6 +78,7 @@ export default {
           CodeBlock
         ],
         toolbar: {
+          viewportTopOffset: 50,
           items: [
             'heading',
             'bold',
@@ -106,7 +104,7 @@ export default {
             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
           ]
         },
-        viewportTopOffset: 100,
+        // viewportTopOffset: 50,
         codeBlock: {
           languages: [
             { language: 'css', label: 'CSS' },
@@ -209,9 +207,14 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.line{
-  text-align: center;
-}
+<style>
+  .ck-editor__editable {
+    min-height: 600px !important;
+  }
+  .ck-content{
+    min-height: 600px !important;
+  }
+  .ck.ck-editor__top .ck-sticky-panel .ck-toolbar{
+    border-bottom-width: 1px;
+  }
 </style>

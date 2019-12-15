@@ -90,11 +90,8 @@ export default {
       pox: 0,
       articles: [],
       items: []
-      // items2: []
-      // items3: []
     }
   },
-  computed: {},
   mounted() {
     ArticleApi.list().then(response => {
       if (response.code === 200) {
