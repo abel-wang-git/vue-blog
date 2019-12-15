@@ -30,14 +30,14 @@
       </el-col>
       <el-col :span="24" class="article-comment">
         <el-row :gutter="20" class="article-comment-item" style="margin: 0 !important;">
-          <el-col :span="2">
+          <el-col :xs="{span: 5, offset: 0}" :sm="{span: 2, offset: 0}" :md="{span: 2, offset: 0}" :lg="{span: 2, offset: 0}" :xl="{span: 2, offset: 0}">
             <el-avatar :size="50" src="http://www.wanghuiwen.com/favicon.ico" />
           </el-col>
-          <el-col :span="16">
+          <el-col class="article-comment-content" :xs="{span: 11, offset: 0}" :sm="{span: 16, offset: 0}" :md="{span: 16, offset: 0}" :lg="{span: 16, offset: 0}" :xl="{span: 16, offset: 0}">
             <el-row>热心网友</el-row>
             <el-row>评论了个啥</el-row>
           </el-col>
-          <el-col :span="4" class="article-comment-time">
+          <el-col :xs="{span: 8, offset: 0}" :sm="{span: 8, offset: 0}" :md="{span: 6, offset: 0}" :lg="{span: 6, offset: 0}" :xl="{span: 6, offset: 0}" class="article-comment-time">
             <el-row>
               <el-col :span="12">
                 <a>回复</a>
@@ -51,14 +51,14 @@
         </el-row>
         <el-col :span="22" :offset="2">
           <el-row :gutter="20" class="article-comment-item" style="margin: 0 !important;">
-            <el-col :span="2">
+            <el-col :xs="{span: 5, offset: 0}" :sm="{span: 3, offset: 0}" :md="{span: 2, offset: 0}" :lg="{span: 2, offset: 0}" :xl="{span: 2, offset: 0}">
               <el-avatar :size="50" src="http://www.wanghuiwen.com/favicon.ico" />
             </el-col>
-            <el-col :span="16">
+            <el-col class="article-comment-content" :xs="{span: 11, offset: 0}" :sm="{span: 13, offset: 0}" :md="{span: 16, offset: 0}" :lg="{span: 16, offset: 0}" :xl="{span: 16, offset: 0}">
               <el-row>热心网友</el-row>
               <el-row>评论了个啥</el-row>
             </el-col>
-            <el-col :span="4" class="article-comment-time">
+            <el-col :xs="{span: 8, offset: 0}" :sm="{span: 8, offset: 0}" :md="{span: 6, offset: 0}" :lg="{span: 6, offset: 0}" :xl="{span: 6, offset: 0}" class="article-comment-time">
               <el-row>
                 <el-col :span="12">
                   <a>回复</a>
@@ -145,6 +145,9 @@ export default {
    border-bottom: solid 1px #9a9a9a;
    /*margin-left: 50px;*/
  }
+  .article-comment-content{
+    font-size: 14px;
+  }
   .article-comment-item{
     height: 50px;
     line-height: 25px;
