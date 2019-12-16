@@ -95,11 +95,7 @@ export default {
     this.token = {
       'Authorization': 'Bearer ' + sessionStorage.getItem('vue_admin_template_token')
     }
-    window.addEventListener('scroll', this.handleScroll, true)
     this.getClassList()
-  },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
   },
 
   methods: {
@@ -170,19 +166,6 @@ export default {
     openAddDialog() {
       this.articleClass = null
       this.dialogVisible = true
-    },
-    handleScroll() {
-      // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      // // console.log(document.querySelector('.ck-sticky-panel__content'))
-      // var offsetTop = document.querySelector('.ck-sticky-panel').offsetTop
-      // console.log(offsetTop)
-      // if (scrollTop > 100) {
-      //   // offsetTop = 300 - Number(scrollTop)
-      //   document.querySelector('.ck-sticky-panel__content').style.position = 'fixed'
-      //   document.querySelector('.ck-sticky-panel__content').style.top = '0'
-      // } else {
-      //   document.querySelector('.ck-sticky-panel__content').style.top = offsetTop + 'px'
-      // }
     }
   }
 

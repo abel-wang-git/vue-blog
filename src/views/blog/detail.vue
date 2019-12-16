@@ -1,11 +1,11 @@
 <template>
   <el-row class="article-detail">
-    <div class="detail-header">
+    <el-col class="detail-header">
       <el-image
         :src="list.coverPicture"
         fit="cover"
       />
-    </div>
+    </el-col>
     <el-col class="detail-content" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
       <div class="article-title" style="">{{ list.title }}</div>
       <div class="ck-content" v-html="content.content" />
@@ -22,54 +22,62 @@
           0
         </span>
       </div>
-      <el-col style="padding-top: 30px">
-        <el-col style="text-align: right;padding: 30px">
-          <el-input v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
-          <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment()">评论</el-button>
-        </el-col>
+    </el-col>
+    <el-col class="article-detail-comment" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
+      <el-col style="text-align: right;margin-bottom: 10px">
+        <el-input v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
+        <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment()">评论</el-button>
       </el-col>
-      <el-col :span="24" class="article-comment">
-        <el-row :gutter="20" class="article-comment-item" style="margin: 0 !important;">
-          <el-col :xs="{span: 5, offset: 0}" :sm="{span: 2, offset: 0}" :md="{span: 2, offset: 0}" :lg="{span: 2, offset: 0}" :xl="{span: 2, offset: 0}">
-            <el-avatar :size="50" src="http://www.wanghuiwen.com/favicon.ico" />
+      <el-col class="comment-list">
+        <el-col :span="22" :offset="1" class="article-comment">
+          <div style="display: flex;">
+            <el-avatar :size="50" />
+            <div class="article-comment-user">
+              <div>热心网友</div>
+              <div>2019-12-12</div>
+            </div>
+          </div>
+          <div class="comment-recomment">
+            <div>回复</div>
+            <div><svg-icon icon-class="like" /></div>
+          </div>
+        </el-col>
+        <el-col :span="22" :offset="1" class="article-comment-item ">
+          评论
+          <el-col :span="24" class="article-comment-item-border">
+            <div class="article-comment-item-child">
+              <div style="display: flex;">
+                <el-avatar :size="50" />
+                <div class="article-comment-user">
+                  <div>热心网友</div>
+                  <div>2019-12-12</div>
+                </div>
+              </div>
+              <div class="comment-recomment">
+                <div>回复</div>
+                <div><svg-icon icon-class="like" /></div>
+              </div>
+            </div>
+            <div class="article-c-comment">
+              评论
+            </div>
+            <div class="article-comment-item-child">
+              <div style="display: flex;">
+                <el-avatar :size="50" />
+                <div class="article-comment-user">
+                  <div>热心网友</div>
+                  <div>2019-12-12</div>
+                </div>
+              </div>
+              <div class="comment-recomment">
+                <div>回复</div>
+                <div><svg-icon icon-class="like" /></div>
+              </div>
+            </div>
+            <div class="article-c-comment">
+              评论
+            </div>
           </el-col>
-          <el-col class="article-comment-content" :xs="{span: 11, offset: 0}" :sm="{span: 16, offset: 0}" :md="{span: 16, offset: 0}" :lg="{span: 16, offset: 0}" :xl="{span: 16, offset: 0}">
-            <el-row>热心网友</el-row>
-            <el-row>评论了个啥</el-row>
-          </el-col>
-          <el-col :xs="{span: 8, offset: 0}" :sm="{span: 8, offset: 0}" :md="{span: 6, offset: 0}" :lg="{span: 6, offset: 0}" :xl="{span: 6, offset: 0}" class="article-comment-time">
-            <el-row>
-              <el-col :span="12">
-                <a>回复</a>
-              </el-col>
-              <el-col :span="12">
-                <svg-icon icon-class="like" />1
-              </el-col>
-            </el-row>
-            <el-row>2099-99-99</el-row>
-          </el-col>
-        </el-row>
-        <el-col :span="22" :offset="2">
-          <el-row :gutter="20" class="article-comment-item" style="margin: 0 !important;">
-            <el-col :xs="{span: 5, offset: 0}" :sm="{span: 3, offset: 0}" :md="{span: 2, offset: 0}" :lg="{span: 2, offset: 0}" :xl="{span: 2, offset: 0}">
-              <el-avatar :size="50" src="http://www.wanghuiwen.com/favicon.ico" />
-            </el-col>
-            <el-col class="article-comment-content" :xs="{span: 11, offset: 0}" :sm="{span: 13, offset: 0}" :md="{span: 16, offset: 0}" :lg="{span: 16, offset: 0}" :xl="{span: 16, offset: 0}">
-              <el-row>热心网友</el-row>
-              <el-row>评论了个啥</el-row>
-            </el-col>
-            <el-col :xs="{span: 8, offset: 0}" :sm="{span: 8, offset: 0}" :md="{span: 6, offset: 0}" :lg="{span: 6, offset: 0}" :xl="{span: 6, offset: 0}" class="article-comment-time">
-              <el-row>
-                <el-col :span="12">
-                  <a>回复</a>
-                </el-col>
-                <el-col :span="12">
-                  <svg-icon icon-class="like" />1
-                </el-col>
-              </el-row>
-              <el-row>2099-99-99</el-row>
-            </el-col>
-          </el-row>
         </el-col>
       </el-col>
     </el-col>
@@ -97,10 +105,12 @@ export default {
         this.content = response.data.content
       }
     })
-  },
+  }
+  ,
   updated: function() {
     Prism.highlightAll()
-  },
+  }
+  ,
   methods: {
     addComment() {
     }
@@ -117,10 +127,18 @@ export default {
   }
   .article-detail{
     background-color: #e3ebf7;
+    padding-bottom: 10vh;
   }
  .detail-header{
    height: 50vh;
+   position: absolute;
+   top: 0;
+ }
+ .article-detail-comment{
    position: relative;
+   background-color: white;
+   margin-top: 20px;
+   padding: 20px;
  }
  .el-image {
    height: 100%;
@@ -129,10 +147,12 @@ export default {
 
  .detail-content{
    position: relative;
-   top: -40vh;
+   /*top: -40vh;*/
    padding: 10px;
-   min-height: 70vh;
+   margin-top: 10vh;
+   min-height: 90vh;
    background-color: white;
+   z-index: 100;
  }
  .detail-bottom{
    text-align: right;
@@ -142,16 +162,9 @@ export default {
    padding-right: 20px;
  }
  .article-comment{
-   border-bottom: solid 1px #9a9a9a;
-   /*margin-left: 50px;*/
+   justify-content: space-between;
+   display: flex;
  }
-  .article-comment-content{
-    font-size: 14px;
-  }
-  .article-comment-item{
-    height: 50px;
-    line-height: 25px;
-  }
   .blog-detail-icon{
     margin-right: 5px;
     margin-left: 5px;
@@ -159,7 +172,35 @@ export default {
   .blog-detail-time{
     float: left;
   }
-  .article-comment-time{
-    font-size:12px;
+  .article-comment-item{
+    padding-left: 50px;
+    padding-top: 10px;
+  }
+  .article-comment-item-child{
+    margin-top: 10px;
+    padding-left: 10px;
+    justify-content: space-between;
+    display: flex;
+  }
+  .article-comment-item-border{
+    border-left: solid 2px rgba(13, 18, 27, 0.95);
+    margin-top: 10px;
+  }
+  .article-comment-user{
+    display: flex;flex-direction:column;justify-content: space-around;padding-left: 10px;
+    font-size: 14px;
+  }
+  .article-c-comment{
+    padding-left: 60px;
+    padding-top: 10px;
+  }
+  .comment-recomment{
+    display: flex;flex-direction:column;justify-content: space-around;
+    padding: 3px;
+    font-size: 14px;
+  }
+  .comment-list{
+    border-bottom: dashed 1px rgba(24,40,58,0.83);
+    padding-bottom: 10px;
   }
 </style>

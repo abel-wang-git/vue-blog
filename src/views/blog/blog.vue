@@ -33,8 +33,8 @@
           >
             <div class="article-card" @click="detail(article.articleId)">
               <div class="article-card-content">
-                <el-image
-                  :src="article.url"
+                <image
+                  :src="article.coverPicture"
                   fit="cover"
                 />
                 <div class="article-bottom">
@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     detail(id) {
-      console.log(id)
       this.$router.push({ path: '/article/detail', query: { id: id }})
     },
     menu(t) {
