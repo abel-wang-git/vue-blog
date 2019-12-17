@@ -31,7 +31,7 @@
       <el-col class="comment-list">
         <el-col :span="22" :offset="1" class="article-comment">
           <div style="display: flex;">
-            <el-avatar :size="50" />
+            <el-avatar :size="35" />
             <div class="article-comment-user">
               <div>热心网友</div>
               <div>2019-12-12</div>
@@ -47,7 +47,7 @@
           <el-col :span="24" class="article-comment-item-border">
             <div class="article-comment-item-child">
               <div style="display: flex;">
-                <el-avatar :size="50" />
+                <el-avatar :size="35" />
                 <div class="article-comment-user">
                   <div>热心网友</div>
                   <div>2019-12-12</div>
@@ -63,7 +63,7 @@
             </div>
             <div class="article-comment-item-child">
               <div style="display: flex;">
-                <el-avatar :size="50" />
+                <el-avatar :size="35" />
                 <div class="article-comment-user">
                   <div>热心网友</div>
                   <div>2019-12-12</div>

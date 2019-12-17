@@ -33,7 +33,7 @@
           >
             <div class="article-card" @click="detail(article.articleId)">
               <div class="article-card-content">
-                <image
+                <img
                   :src="article.coverPicture"
                   fit="cover"
                 />
@@ -179,7 +179,7 @@ export default {
 
   .index-title2 {
     color: white;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .article-card {
