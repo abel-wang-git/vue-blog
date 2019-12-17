@@ -183,7 +183,7 @@ export default {
     display: flex;
   }
   .article-comment-item-border{
-    border-left: solid 2px rgba(13, 18, 27, 0.95);
+    border-left: solid 3px rgba(119, 119, 119, 0.56);
     margin-top: 10px;
   }
   .article-comment-user{

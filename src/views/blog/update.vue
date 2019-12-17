@@ -1,59 +1,59 @@
 <template>
   <div class="app-container">
     <el-form ref="article" :model="article" :rules="rules" label-width="120px">
-      <el-row>
-        <el-col :span="10">
-          <el-form-item label="标题" prop="title">
-            <el-input v-model="article.title" />
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="10">
-          <el-form-item label="分类" prop="classId">
-            <el-select v-model="article.classId" placeholder="">
-              <el-option
-                v-for="(item, index) in classOption"
-                :key="index"
-                :value="item.value"
-                :label="item.label"
-              />
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col>
-          <el-form-item label="封面" prop="">
-            <el-upload
-              class="avatar-uploader"
-              :action="uploadUrl"
-              :headers="token"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img v-if="article.coverPicture" :src="article.coverPicture" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon" />
-            </el-upload>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="20">
-          <el-form-item label="内容" prop="content">
+      <div class="article-add-content">
+        <el-row>
+          <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
+            <input v-model="article.title" class="title-input" placeholder="标题">
             <editor v-model="article.content" :content="article.content" @getContent="getContent" />
-          </el-form-item>
+            <el-row :gutter="20" class="article-add-setting">
+              <el-col :span="5">
+                <el-upload
+                  class="avatar-uploader"
+                  :action="uploadUrl"
+                  :headers="token"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  :before-upload="beforeAvatarUpload"
+                >
+                  <img v-if="article.coverPicture" :src="article.coverPicture" class="avatar">
+                  <div v-else class="avatar-uploader-icon">
+                    <div class="avatar-uploader-text">
+                      <i class="el-icon-plus" />选择封面
+                    </div>
+                  </div>
+                </el-upload>
+              </el-col>
+              <el-col class="article-types" style="display: inline-block" :span="16">
+                <el-form-item label="文章分类">
+                  <el-radio-group v-model="article.classId">
+                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{item.className}}</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :span="2">
+                <el-button size="mini" type="success" @click="openAddDialog">添加分类</el-button>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
+      </div>
+      <el-row class="article-add-bottom">
+        <el-col class="article-add" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
+          <el-button type="primary" @click="onSubmit">保存</el-button>
+          <router-link :to="{path:'/'}"><el-button>取消</el-button></router-link>
         </el-col>
       </el-row>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">修改</el-button>
-      </el-form-item>
-      <el-input v-model="article.id" type="hidden" />
     </el-form>
+    <el-dialog title="添加分类" :visible.sync="dialogVisible" width="30%">
+      <el-row>
+        <el-input v-model="articleClass" />
+      </el-row>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addArticleClass">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -70,22 +70,16 @@ export default {
         content: ''
       },
       token: null,
+      articleClass: null,
       rules: {
         title: [{ required: true, message: '请添加标题', trigger: 'blur' }],
         classId: [{ required: true, message: '请选择分类', trigger: 'blur' }],
         coverPicture: [{ required: true, message: '封面不能为空', trigger: 'blur' }],
         content: [{ required: true, message: '内容不能为空', trigger: 'blur' }]
       },
-      classOption: [
-        {
-          value: 1,
-          label: '文章'
-        },
-        {
-          value: 2,
-          label: '笔记'
-        }
-      ]
+      classOption: [],
+      dialogVisible: false,
+      dialogPreview: false
     }
   },
 
@@ -93,6 +87,7 @@ export default {
     this.token = {
       'Authorization': 'Bearer ' + sessionStorage.getItem('vue_admin_template_token')
     }
+    this.getClassList()
   },
   created() {
     ArticleApi.detail(this.$route.query).then(response => {
@@ -103,6 +98,15 @@ export default {
     })
   },
   methods: {
+    addArticleClass() {
+      ArticleApi.addClass({ className: this.articleClass }).then(response => {
+        if (response.code === 200) {
+          this.getClassList()
+          this.articleClass = null
+          this.dialogVisible = false
+        }
+      })
+    },
     handleAvatarSuccess(res, file) {
       this.article.coverPicture = process.env.VUE_APP_IMAGE_HOST + res.data
     },
@@ -134,6 +138,19 @@ export default {
           })
         }
       })
+    },
+
+    getClassList() {
+      ArticleApi.classList().then(response => {
+        if (response.code === 200) {
+          this.classOption = response.data
+        }
+      })
+    },
+
+    openAddDialog() {
+      this.articleClass = null
+      this.dialogVisible = true
     }
   }
 
@@ -142,38 +159,92 @@ export default {
 </script>
 
 <style scoped>
-  .line{
-    text-align: center;
-  }
-
-</style>
-<style>
-  .ck-content {
-    min-height: 300px;
-  }
-
   .avatar-uploader .el-upload {
+    width: 178px;
+    height: 178px;
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    float: left;
   }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
   .avatar-uploader-icon {
     font-size: 28px;
-    color: #8c939d;
+    color: #5d9d45;
     width: 178px;
     height: 178px;
     line-height: 178px;
     text-align: center;
   }
   .avatar {
-    width: 178px;
+    width: 100%;
     height: 178px;
     display: block;
+  }
+  .title-input{
+    /*caret-color: black;*/
+    border:none;
+    line-height: 50px;
+    outline:medium;
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    width:100%;
+    text-align: center;
+  }
+  .title-input:-ms-input-placeholder{
+    font-size:2rem;
+  }
+  .title-input::-webkit-input-placeholder{
+    font-size:2rem;
+  }
+  .title-input{
+    animation: animations 1s infinite;
+  }
+
+  @keyframes animations {
+    0%{
+      border-bottom: solid 1px #ccc;
+    }
+    50%{
+      border-bottom: solid 1px black;
+    }
+    100%{
+      border-bottom: solid 1px #ccc;
+    }
+  }
+  .article-add-bottom{
+    position: fixed;
+    bottom: 0;
+    left:0;
+    padding: 10px;
+    background-color: #777777;
+    width: 100vw;
+    height: 50px;
+    text-align: right;
+  }
+  .article-add-content{
+    margin-bottom: 60px;
+  }
+  .article-add-setting{
+    border: solid #777777 1px;
+    margin-top: 20px;
+    padding: 20px;
+  }
+  .avatar-uploader-text{
+    position: absolute;
+    height: 170px;
+    width: 178px;
+    line-height: 178px;
+    font-size: 15px;
+    color: #8c939d;
+  }
+  .ck-sticky-panel__content{
+    /*position: fixed!important;*/
+    /*top: 0 !important;;*/
   }
 </style>
 

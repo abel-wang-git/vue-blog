@@ -35,7 +35,7 @@
               <div class="article-card-content">
                 <img
                   :src="article.coverPicture"
-                  fit="cover"
+                  style="width: 100%"
                 />
                 <div class="article-bottom">
                   <div class="blog-title">{{ article.title }}</div>

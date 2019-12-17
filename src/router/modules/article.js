@@ -16,13 +16,6 @@ const articleRouter = {
       name: 'ArticleList',
       hidden: false,
       meta: { title: '文章列表' }
-    },
-    {
-      path: '/article/update',
-      component: () => import('@/views/blog/update'),
-      name: 'ArticleUpdate',
-      hidden: true,
-      meta: { title: '文章修改' }
     }
   ]
 }
