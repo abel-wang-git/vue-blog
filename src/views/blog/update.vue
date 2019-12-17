@@ -27,7 +27,7 @@
               <el-col class="article-types" style="display: inline-block" :span="16">
                 <el-form-item label="文章分类">
                   <el-radio-group v-model="article.classId">
-                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{item.className}}</el-radio>
+                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{ item.className }}</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </el-col>

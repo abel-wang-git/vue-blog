@@ -26,7 +26,7 @@
     <el-col class="article-detail-comment" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
       <el-col style="text-align: right;margin-bottom: 10px">
         <el-input v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
-        <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment()">评论</el-button>
+        <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(0)">评论</el-button>
       </el-col>
       <el-col class="comment-list">
         <el-col :span="22" :offset="1" class="article-comment">
@@ -87,7 +87,10 @@
 <script>
 import ArticleApi from '@/api/article'
 import '@/styles/content-styles.css'
+import { mapGetters } from 'vuex'
+
 import Prism from 'prismjs'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Detail',
@@ -98,6 +101,11 @@ export default {
       comment: ''
     }
   },
+  computed: {
+    ...mapGetters([
+      'name'
+    ])
+  },
   mounted() {
     ArticleApi.detail(this.$route.query).then(response => {
       if (response.code === 200) {
@@ -105,14 +113,26 @@ export default {
         this.content = response.data.content
       }
     })
-  }
-  ,
+  },
   updated: function() {
     Prism.highlightAll()
-  }
-  ,
+  },
   methods: {
-    addComment() {
+    addComment(pid) {
+      const comment = {}
+      comment.articleId = this.list.articleId
+      comment.comment = this.comment
+      comment.pId = pid
+      ArticleApi.addComment(comment).then(response => {
+        if (response.code === 200) {
+          this.comment = null
+          Message({
+            message: '评论成功',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        }
+      })
     }
   }
 }
