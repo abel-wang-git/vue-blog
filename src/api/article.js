@@ -71,6 +71,16 @@ const ArticleApi = {
       method: 'post',
       data: qs.stringify(params)
     })
+  },
+  listComment: function addComment(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/comment/list',
+      method: 'post',
+      data: qs.stringify(params)
+    })
   }
 }
 export default ArticleApi
