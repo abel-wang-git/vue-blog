@@ -17,17 +17,17 @@
       <div class="article-title" style="">{{ list.title }}</div>
       <div class="ck-content" v-html="content.content" />
       <div class="detail-bottom">
-        <span class="blog-detail-time">
-          {{ list.createTime }}
+        <span class="blog-detail-icon" @click="like()">
+          <svg-icon icon-class="like" class-name='detail-icon' />
         </span>
-        <span class="blog-detail-icon">
-          <svg-icon icon-class="eye-open" />
-          {{ list.hot===null ? 0 :list.hot }}
-        </span>
-        <span class="blog-detail-icon">
-          <svg-icon icon-class="like" />
-          0
-        </span>
+        <el-tooltip effect="light" placement="bottom">
+          <div slot="content">
+            <img src="@/assets/blog/1008760262.jpg" width="100px" height="100px"/>
+          </div>
+          <span class="blog-detail-icon">
+            <svg-icon icon-class="donation" class-name='detail-icon' />
+          </span>
+        </el-tooltip>
       </div>
     </el-col>
     <el-col
@@ -150,6 +150,24 @@ export default {
       ArticleApi.listComment({ articleId: this.list.articleId }).then(response => {
         this.commentList = response.data
       })
+    },
+    like() {
+      ArticleApi.like({ articleId: this.list.articleId, uid: 123 }).then(response => {
+        if (response.code === 200) {
+          Message({
+            message: '点赞成功',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        }
+        if (response.code === 403) {
+          Message({
+            message: '请先登录',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        }
+      })
     }
   }
 }
@@ -197,11 +215,12 @@ export default {
   }
 
   .detail-bottom {
-    text-align: right;
-    height: 20px;
-    line-height: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
   }
 
   .article-comment {
@@ -260,5 +279,8 @@ export default {
     border-bottom: dashed 1px rgba(24, 40, 58, 0.83);
     padding-bottom: 1rem;
     padding-top: 1rem;
+  }
+  .detail-icon{
+    font-size: 30px;
   }
 </style>

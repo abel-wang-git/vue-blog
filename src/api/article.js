@@ -12,6 +12,16 @@ const ArticleApi = {
       data: qs.stringify(params)
     })
   },
+  index: function index(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/list/index',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
   classList: function getList(params) {
     return request({
       headers: {
@@ -78,6 +88,16 @@ const ArticleApi = {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       url: '/article/comment/list',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+  like: function like(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/article/like/add',
       method: 'post',
       data: qs.stringify(params)
     })

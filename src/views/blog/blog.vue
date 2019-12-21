@@ -53,7 +53,7 @@
                       0
                     </span>
                   </div>
-                  <div class="blog-time">2019-11-11</div>
+                  <div class="blog-time">{{article.createTime.substring(0,10)}}</div>
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default {
     }
   },
   mounted() {
-    ArticleApi.list().then(response => {
+    ArticleApi.index().then(response => {
       if (response.code === 200) {
         if (response.data.total > 0) {
           this.articles = response.data.list
