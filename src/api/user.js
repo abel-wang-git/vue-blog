@@ -49,3 +49,11 @@ export function getRole(params) {
     data: qs.stringify(params)
   })
 }
+
+export function registered(params) {
+  return request({
+    url: '/user/registered',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}

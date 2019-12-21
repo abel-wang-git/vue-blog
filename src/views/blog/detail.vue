@@ -18,14 +18,14 @@
       <div class="ck-content" v-html="content.content" />
       <div class="detail-bottom">
         <span class="blog-detail-icon" @click="like()">
-          <svg-icon icon-class="like" class-name='detail-icon' />
+          <svg-icon icon-class="like" class-name="detail-icon" />
         </span>
         <el-tooltip effect="light" placement="bottom">
           <div slot="content">
-            <img src="@/assets/blog/1008760262.jpg" width="100px" height="100px"/>
+            <img src="@/assets/blog/1148331928.jpg" width="150px" height="150px">
           </div>
           <span class="blog-detail-icon">
-            <svg-icon icon-class="donation" class-name='detail-icon' />
+            <svg-icon icon-class="donation" class-name="detail-icon" />
           </span>
         </el-tooltip>
       </div>
@@ -62,7 +62,7 @@
           {{ item.comment }}
           <el-input v-if="replyCommentId === item.commentId" v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
           <el-col v-if="item.reply" :span="24" class="article-comment-item-border">
-            <div v-for="(item, index) in item.reply" :key="index">
+            <div v-for="(item) in item.reply" :key="item.commentId">
               <div class="article-comment-item-child">
                 <div style="display: flex;">
                   <el-avatar :size="35" />
@@ -86,6 +86,106 @@
         </el-col>
       </el-col>
     </el-col>
+    <el-col
+      class="article-detail-comment"
+      :xs="{span: 24, offset: 0}"
+      :sm="{span: 24, offset: 0}"
+      :md="{span: 16, offset: 4}"
+      :lg="{span: 16, offset: 4}"
+      :xl="{span: 12, offset: 6}"
+    >
+      <el-dialog title="请先登录" :visible.sync="loginVisible" :width="dialogWidth">
+        <el-form v-if="loginType===1" ref="loginForm" :model="loginForm" auto-complete="on">
+          <el-form-item prop="username">
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="用户名"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+              prefix-icon="el-icon-s-custom"
+            />
+          </el-form-item>
+
+          <el-form-item prop="password">
+            <el-input
+              ref="password"
+              v-model="loginForm.password"
+              type="password"
+              placeholder="密码"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              prefix-icon="el-icon-key"
+            />
+          </el-form-item>
+          <a @click="loginType=2">注册</a>
+          <div style="text-align: center">
+            <el-button size="mini" type="primary" @click="loginUser()">登录</el-button>
+            <el-button size="mini" @click="loginVisible=false">取消</el-button>
+          </div>
+        </el-form>
+        <el-form v-if="loginType===2" ref="loginForm" :model="loginForm" auto-complete="on">
+          <el-form-item prop="username">
+            <el-input
+              ref="username"
+              v-model="loginForm.username"
+              placeholder="登录邮箱"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+              prefix-icon="el-icon-s-custom"
+            />
+          </el-form-item>
+
+          <el-form-item prop="username">
+            <el-input
+              ref="username"
+              v-model="loginForm.nickname"
+              placeholder="昵称"
+              name="username"
+              type="text"
+              tabindex="1"
+              auto-complete="on"
+              prefix-icon="el-icon-s-custom"
+            />
+          </el-form-item>
+
+          <el-form-item prop="password">
+            <el-input
+              ref="password"
+              v-model="loginForm.password"
+              type="password"
+              placeholder="密码"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              prefix-icon="el-icon-key"
+            />
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              ref="password"
+              v-model="loginForm.repassword"
+              type="password"
+              placeholder="重复密码"
+              name="password"
+              tabindex="2"
+              auto-complete="on"
+              prefix-icon="el-icon-key"
+            />
+          </el-form-item>
+          <a @click="loginType=1">登录</a>
+          <div style="text-align: center">
+            <el-button size="mini" type="primary" @click="registered()">注册</el-button>
+            <el-button size="mini" @click="loginVisible=false">取消</el-button>
+          </div>
+        </el-form>
+      </el-dialog>
+    </el-col>
   </el-row>
 </template>
 
@@ -105,7 +205,16 @@ export default {
       commentList: {},
       content: '',
       comment: '',
-      replyCommentId: ''
+      replyCommentId: '',
+      loginVisible: false,
+      loginForm: {
+        username: '',
+        password: '',
+        nickname: '',
+        repassword: ''
+      },
+      loginType: 1,
+      dialogWidth: '0'
     }
   },
   computed: {
@@ -121,11 +230,31 @@ export default {
         this.listComment()
       }
     })
+    window.onresize = () => {
+      return (() => {
+        this.setDialogWidth()
+      })()
+    }
+    if (document.body.clientWidth < 768) {
+      this.dialogWidth = '100%'
+    } else {
+      this.dialogWidth = '400px'
+    }
   },
   updated: function() {
     Prism.highlightAll()
   },
   methods: {
+    loginUser() {
+      this.$store.dispatch('user/login', this.loginForm).then(() => {
+        this.loginVisible = false
+      })
+    },
+    registered() {
+      this.$store.dispatch('user/registered', this.loginForm).then(() => {
+        this.loginVisible = false
+      })
+    },
     addComment(pid) {
       const comment = {}
       comment.articleId = this.list.articleId
@@ -155,19 +284,25 @@ export default {
       ArticleApi.like({ articleId: this.list.articleId, uid: 123 }).then(response => {
         if (response.code === 200) {
           Message({
-            message: '点赞成功',
+            message: response.message,
             type: 'success',
             duration: 2 * 1000
           })
         }
-        if (response.code === 403) {
-          Message({
-            message: '请先登录',
-            type: 'success',
-            duration: 2 * 1000
-          })
+        if (response.code === 200403) {
+          this.loginVisible = true
         }
       })
+    },
+    setDialogWidth() {
+      console.log(document.body.clientWidth)
+      var val = document.body.clientWidth
+      const def = 800 // 默认宽度
+      if (val < def) {
+        this.dialogWidth = '100%'
+      } else {
+        this.dialogWidth = def + 'px'
+      }
     }
   }
 }
@@ -282,5 +417,8 @@ export default {
   }
   .detail-icon{
     font-size: 30px;
+  }
+  .el-dialog__body{
+    padding: 10px 20px !important;
   }
 </style>

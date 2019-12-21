@@ -1,4 +1,4 @@
-import { toLogin, logout, getInfo } from '@/api/user'
+import { toLogin, logout, getInfo, registered } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -43,7 +43,20 @@ const actions = {
       })
     })
   },
-
+  registered({ commit }, userInfo) {
+    const { username, password, nickname } = userInfo
+    return new Promise((resolve, reject) => {
+      registered({ username: username.trim(), password: password, nickname: nickname }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        getInfo()
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -51,13 +64,13 @@ const actions = {
         const { data } = response
 
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('验证失败，请重新登录')
         }
         // 重复请求说明这里出现问题了
         const { roles, username, avatar } = data
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+          reject('角色必须为非空的数组')
         }
 
         commit('SET_ROLES', roles)
