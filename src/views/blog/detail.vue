@@ -45,7 +45,7 @@
       <el-col v-for="(item, index) in commentList" :key="index" class="comment-list">
         <el-col :span="22" :offset="1" class="article-comment">
           <div style="display: flex;">
-            <el-avatar :size="35" />
+            <el-avatar :size="35" :src="item.avatar" />
             <div class="article-comment-user">
               <div>{{ item.name }}</div>
               <div>{{ item.createTime }}</div>
@@ -62,13 +62,13 @@
           {{ item.comment }}
           <el-input v-if="replyCommentId === item.commentId" v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
           <el-col v-if="item.reply" :span="24" class="article-comment-item-border">
-            <div v-for="(item) in item.reply" :key="item.commentId">
+            <div v-for="(replyitem) in item.reply" :key="replyitem.commentId">
               <div class="article-comment-item-child">
                 <div style="display: flex;">
                   <el-avatar :size="35" />
                   <div class="article-comment-user">
-                    <div>{{ item.name }}</div>
-                    <div>{{ item.createTime }}</div>
+                    <div>{{ replyitem.name }}</div>
+                    <div>{{ replyitem.createTime }}</div>
                   </div>
                 </div>
                 <div class="comment-recomment">
@@ -79,7 +79,7 @@
                 </div>
               </div>
               <div class="article-c-comment">
-                {{ item.comment }}
+                {{ replyitem.comment }}
               </div>
             </div>
           </el-col>
@@ -95,7 +95,7 @@
       :xl="{span: 12, offset: 6}"
     >
       <el-dialog title="请先登录" :visible.sync="loginVisible" :width="dialogWidth">
-        <el-form v-if="loginType===1" ref="loginForm" :model="loginForm" auto-complete="on">
+        <el-form v-if="loginType===1" ref="loginForm" :rules="rules" :model="loginForm" auto-complete="on">
           <el-form-item prop="username">
             <el-input
               ref="username"
@@ -127,7 +127,12 @@
             <el-button size="mini" @click="loginVisible=false">取消</el-button>
           </div>
         </el-form>
-        <el-form v-if="loginType===2" ref="loginForm" :model="loginForm" auto-complete="on">
+        <el-form v-if="loginType===2" ref="registeredForm" :rules="rules" :model="loginForm" auto-complete="on">
+          <el-row :gutter="5">
+            <el-col v-for="(avatar, index) in avatars" :key="index" :span="3">
+              <img :class="[index===avatarIndex? 'detail-avatar-chose': 'detail-avatar']" :src="avatar" @click="choseAvatar(avatar,index)">
+            </el-col>
+          </el-row>
           <el-form-item prop="username">
             <el-input
               ref="username"
@@ -141,7 +146,7 @@
             />
           </el-form-item>
 
-          <el-form-item prop="username">
+          <el-form-item prop="nickname">
             <el-input
               ref="username"
               v-model="loginForm.nickname"
@@ -150,7 +155,7 @@
               type="text"
               tabindex="1"
               auto-complete="on"
-              prefix-icon="el-icon-s-custom"
+              prefix-icon="el-icon-user"
             />
           </el-form-item>
 
@@ -166,7 +171,7 @@
               prefix-icon="el-icon-key"
             />
           </el-form-item>
-          <el-form-item prop="password">
+          <el-form-item prop="repassword">
             <el-input
               ref="password"
               v-model="loginForm.repassword"
@@ -196,10 +201,30 @@ import { mapGetters } from 'vuex'
 
 import Prism from 'prismjs'
 import { Message } from 'element-ui'
+import { checkEmail } from '../../utils/validate'
 
 export default {
   name: 'Detail',
   data() {
+    const validPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'))
+      } else {
+        if (this.loginForm.repassword !== '') {
+          this.$refs.registeredForm.validateField('repassword')
+        }
+        callback()
+      }
+    }
+    const validRePassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.loginForm.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    }
     return {
       list: {},
       commentList: {},
@@ -211,10 +236,41 @@ export default {
         username: '',
         password: '',
         nickname: '',
-        repassword: ''
+        repassword: '',
+        avatar: ''
       },
+      avatarIndex: 0,
       loginType: 1,
-      dialogWidth: '0'
+      dialogWidth: '0',
+      avatars: [
+        require('@/assets/blog/avatar1.png'),
+        require('@/assets/blog/avatar2.png'),
+        require('@/assets/blog/avatar3.png'),
+        require('@/assets/blog/avatar4.png'),
+        require('@/assets/blog/avatar5.png'),
+        require('@/assets/blog/avatar6.png'),
+        require('@/assets/blog/avatar7.png'),
+        require('@/assets/blog/avatar8.png')
+      ],
+      rules: {
+        username: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
+          { validator: checkEmail, trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+          { validator: validPassword, trigger: 'blur' }
+        ],
+        nickname: [
+          { required: true, message: '请输入昵称', trigger: 'blur' }
+        ],
+        repassword: [
+          { required: true, message: '请输再次入密码', trigger: 'blur' },
+          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+          { validator: validRePassword, trigger: 'blur' }
+        ]
+      }
     }
   },
   computed: {
@@ -246,13 +302,21 @@ export default {
   },
   methods: {
     loginUser() {
-      this.$store.dispatch('user/login', this.loginForm).then(() => {
-        this.loginVisible = false
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.loginVisible = false
+          })
+        }
       })
     },
     registered() {
-      this.$store.dispatch('user/registered', this.loginForm).then(() => {
-        this.loginVisible = false
+      this.$refs.registeredForm.validate(valid => {
+        if (valid) {
+          this.$store.dispatch('user/registered', this.loginForm).then(() => {
+            this.loginVisible = false
+          })
+        }
       })
     },
     addComment(pid) {
@@ -303,6 +367,11 @@ export default {
       } else {
         this.dialogWidth = def + 'px'
       }
+    },
+    choseAvatar(avatar, index) {
+      this.loginForm.avatar = avatar
+      this.avatarIndex = index
+      console.log(this.avatarIndex)
     }
   }
 }
@@ -342,7 +411,7 @@ export default {
   .detail-content {
     position: relative;
     /*top: -40vh;*/
-    padding: 10px;
+    padding: 10px 40px;
     margin-top: 10vh;
     min-height: 90vh;
     background-color: white;
@@ -420,5 +489,13 @@ export default {
   }
   .el-dialog__body{
     padding: 10px 20px !important;
+  }
+  .detail-avatar{
+    width: 100%;
+    border: dashed 1px #5d9d45 ;
+  }
+  .detail-avatar-chose{
+    width: 100%;
+    border: solid 2px #5d9d45 ;
   }
 </style>

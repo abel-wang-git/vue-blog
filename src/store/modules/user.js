@@ -44,9 +44,9 @@ const actions = {
     })
   },
   registered({ commit }, userInfo) {
-    const { username, password, nickname } = userInfo
+    const { username, password, nickname, avatar } = userInfo
     return new Promise((resolve, reject) => {
-      registered({ username: username.trim(), password: password, nickname: nickname }).then(response => {
+      registered({ username: username.trim(), password: password, nickname: nickname, avatar: avatar }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
