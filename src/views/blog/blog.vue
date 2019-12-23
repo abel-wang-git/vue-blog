@@ -45,7 +45,7 @@
                       0
                     </span>
                     <span class="blog-detail-icon">
-                      <svg-icon icon-class="eye-open" />
+                      <svg-icon icon-class="hot" />
                       {{ article.hot === null? 0: article.hot }}
                     </span>
                     <span class="blog-detail-icon">
@@ -53,7 +53,7 @@
                       0
                     </span>
                   </div>
-                  <div class="blog-time">2019-11-11</div>
+                  <div class="blog-time">{{article.createTime.substring(0,10)}}</div>
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default {
     }
   },
   mounted() {
-    ArticleApi.list().then(response => {
+    ArticleApi.index().then(response => {
       if (response.code === 200) {
         if (response.data.total > 0) {
           this.articles = response.data.list
@@ -174,7 +174,8 @@ export default {
   .index-title {
     color: white;
     font-size: 3rem;
-    padding-top: 25vh;
+    padding-top: 20vh;
+    padding-bottom: 1rem;
   }
 
   .index-title2 {
@@ -188,7 +189,7 @@ export default {
     height: 0;
     position: relative;
     border: solid 1px #929292;
-    border-radius: 15px;
+    border-radius: 10px;
     overflow: hidden;
   }
 
@@ -204,7 +205,7 @@ export default {
   }
 
   .blog-title {
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding-left: 1rem;
     padding-top: 10px;
     white-space: nowrap;
@@ -213,12 +214,16 @@ export default {
   }
 
   .blog-detail {
+    border-bottom: solid 1px #d6cece;
+    padding-bottom: 5px;
     font-size: 0.7rem;
     padding-left: 1rem;
     padding-top: 10px;
   }
 
   .blog-time {
+    color:#8a8a8a;
+    padding-top: 5px;
     font-size: 0.7rem;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -240,6 +245,8 @@ export default {
   .blog-detail-icon {
     margin-left: 5px;
     margin-right: 5px;
+    font-size: 0.8rem;
+    color: #8a8a8a;
   }
 
   .add-bottom {

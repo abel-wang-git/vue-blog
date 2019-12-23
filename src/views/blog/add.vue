@@ -31,6 +31,18 @@
                     <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{item.className}}</el-radio>
                   </el-radio-group>
                 </el-form-item>
+                <el-form-item label="是否公开">
+                  <el-radio-group v-model="article.status">
+                    <el-radio :label="1">公开</el-radio>
+                    <el-radio :label="2">不公开</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+                <el-form-item label="是否置顶">
+                  <el-radio-group v-model="article.top">
+                    <el-radio :label="1">置顶</el-radio>
+                    <el-radio :label="0">不置顶</el-radio>
+                  </el-radio-group>
+                </el-form-item>
               </el-col>
               <el-col :span="2">
                 <el-button size="mini" type="success" @click="openAddDialog">添加分类</el-button>
@@ -256,6 +268,9 @@ export default {
     line-height: 178px;
     font-size: 15px;
     color: #8c939d;
+  }
+  .el-form-item{
+    margin-bottom: 5px !important;
   }
   .ck-sticky-panel__content{
     /*position: fixed!important;*/

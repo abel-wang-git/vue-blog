@@ -297,3 +297,7 @@
     display: none;
   }
 }
+
+.ck-content p {
+  line-height: 1.8;
+}

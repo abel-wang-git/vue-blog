@@ -7,7 +7,8 @@ const sysRouter = {
   name: 'Table',
   meta: {
     title: '系统设置',
-    icon: 'system-setting'
+    icon: 'system-setting',
+    role: ['admin']
   },
   children: [
     {

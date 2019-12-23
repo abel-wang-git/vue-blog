@@ -36,7 +36,7 @@ export default {
       if (this.command === 'ls') {
         var his = {}
         his.cmd = this.command
-        ArticleApi.list().then(response => {
+        ArticleApi.index().then(response => {
           if (response.code === 200) {
             if (response.data.total > 0) {
               his.results = response.data.list
