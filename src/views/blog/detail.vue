@@ -17,14 +17,15 @@
       <div class="article-title" style="">{{ list.title }}</div>
       <div class="ck-content" v-html="content.content" />
       <div class="detail-bottom">
-        <span class="blog-detail-icon" @click="like()">
+        <span class="blog-detail-icon" :style="{color: isLike ? '#ff3918' : '#8a8a8a' }" @click="like()">
+<!--          <svg-icon v-if="list.isLike" icon-class="like" class-name="detail-icon" />-->
           <svg-icon icon-class="like" class-name="detail-icon" />
         </span>
         <el-tooltip effect="light" placement="bottom">
           <div slot="content">
             <img src="@/assets/blog/1148331928.jpg" width="150px" height="150px">
           </div>
-          <span class="blog-detail-icon">
+          <span class="blog-detail-icon" style="color:#ec8121;">
             <svg-icon icon-class="donation" class-name="detail-icon" />
           </span>
         </el-tooltip>
@@ -227,6 +228,7 @@ export default {
     }
     return {
       list: {},
+      isLike: false,
       commentList: {},
       content: '',
       comment: '',
@@ -283,6 +285,7 @@ export default {
     ArticleApi.detail(this.$route.query).then(response => {
       if (response.code === 200) {
         this.list = response.data.list
+        this.isLike = response.data.isLike
         this.content = response.data.content
         this.listComment()
       }
@@ -370,7 +373,6 @@ export default {
       })
     },
     setDialogWidth() {
-      console.log(document.body.clientWidth)
       var val = document.body.clientWidth
       const def = 800 // 默认宽度
       if (val < def) {
