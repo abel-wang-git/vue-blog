@@ -455,16 +455,16 @@ export default {
   }
 
   .article-comment-item-child {
-    margin-top: 10px;
-    padding-left: 10px;
+    padding-top: 10px;
+    margin-left: 10px;
     justify-content: space-between;
     display: flex;
+    border-top: dotted 1px rgba(162,162,162,0.83);
   }
 
   .article-comment-item-border {
     border-left: solid 3px rgba(119, 119, 119, 0.56);
     margin-top: 10px;
-    border-top: dotted 1px rgba(119, 119, 119, 0.56);
   }
 
   .article-comment-user {
