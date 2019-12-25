@@ -22,7 +22,7 @@ export const constantRoutes = [
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { role: ['admin'], icon: 'dashboard' }
+      meta: { title: '首页', roles: ['admin'], icon: 'dashboard' }
     }]
   },
   {

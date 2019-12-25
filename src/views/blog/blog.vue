@@ -36,7 +36,7 @@
                 <img
                   :src="article.coverPicture"
                   style="width: 100%"
-                />
+                >
                 <div class="article-bottom">
                   <div class="blog-title">{{ article.title }}</div>
                   <div class="blog-detail">
@@ -53,7 +53,7 @@
                       0
                     </span>
                   </div>
-                  <div class="blog-time">{{article.createTime.substring(0,10)}}</div>
+                  <div class="blog-time">{{ article.createTime.substring(0,10) }}</div>
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@
           {{ item }}
         </div>
       </transition-group>
-      <div class="add-bottom" @click="add()">
+      <div v-if="checkPermission(['admin'])" class="add-bottom" @click="add()">
         <svg-icon icon-class="add" class="add-icon" />
       </div>
     </div>
@@ -83,6 +83,8 @@
 <script>
 import ArticleApi from '@/api/article'
 import Velocity from 'velocity-animate'
+import checkPermission from '@/utils/permission'
+
 export default {
   name: 'BlogList',
   data() {
@@ -102,6 +104,7 @@ export default {
     })
   },
   methods: {
+    checkPermission,
     detail(id) {
       this.$router.push({ path: '/article/detail', query: { id: id }})
     },

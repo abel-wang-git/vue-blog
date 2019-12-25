@@ -7,7 +7,8 @@ const articleRouter = {
   name: 'Article',
   meta: {
     title: '文章管理',
-    icon: 'system-setting'
+    icon: 'system-setting',
+    roles: ['admin']
   },
   children: [
     {

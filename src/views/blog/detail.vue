@@ -60,30 +60,33 @@
         </el-col>
         <el-col :span="22" :offset="1" class="article-comment-item ">
           {{ item.comment }}
-          <el-input v-if="replyCommentId === item.commentId" v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
+          <el-col v-if="replyCommentId === item.commentId" class="article-c-comment-reply">
+            <el-input v-model="comment" type="textarea" rows="3" :placeholder=" '回复:' + item.name" />
+            <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(item.commentId)">回复</el-button>
+          </el-col>
           <el-col v-if="item.reply" :span="24" class="article-comment-item-border">
-            <div v-for="(item, index) in item.reply" :key="index">
+            <div v-for="(replyitem, i) in item.reply" :key="i" class="article-c-comment-item">
               <div class="article-comment-item-child">
                 <div style="display: flex;">
                   <el-avatar :size="35" />
                   <div class="article-comment-user">
-                    <div>{{ item.name }}</div>
-                    <div>{{ item.createTime }}</div>
+                    <div>{{ item.name +' 回复 '+ replyitem.replyName }}</div>
+                    <div>{{ item.createTime.substring(0,10) }}</div>
                   </div>
                 </div>
                 <div class="comment-recomment">
-                  <div @click="openComment(item.commentId)">回复</div>
+                  <div @click="openComment(replyitem.commentId)">回复</div>
                   <div>
                     <svg-icon icon-class="like" />
                   </div>
                 </div>
               </div>
               <div class="article-c-comment">
-                {{ item.comment }}
-                <el-col v-if="replyCommentId === item.commentId" class="article-c-comment-reply">
-                  <el-input v-model="comment" type="textarea" rows="3" :placeholder=" '回复:' + item.name" />
-                  <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(item.commentId)">回复</el-button>
+                <el-col v-if="replyCommentId === replyitem.commentId" class="article-c-comment-reply">
+                  <el-input v-model="comment" type="textarea" rows="3" :placeholder=" '回复:' + replyitem.name" />
+                  <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(replyitem.commentId)">回复</el-button>
                 </el-col>
+                {{ replyitem.comment }}
               </div>
             </div>
           </el-col>
@@ -91,7 +94,6 @@
       </el-col>
     </el-col>
     <el-col
-      class="article-detail-comment"
       :xs="{span: 24, offset: 0}"
       :sm="{span: 24, offset: 0}"
       :md="{span: 16, offset: 4}"
@@ -338,6 +340,9 @@ export default {
             duration: 2 * 1000
           })
         }
+        if (response.code === 200403) {
+          this.loginVisible = true
+        }
       })
     },
     openComment(pid) {
@@ -486,6 +491,13 @@ export default {
     border-bottom: dashed 1px rgba(24, 40, 58, 0.83);
     padding-bottom: 1rem;
     padding-top: 1rem;
+  }
+  .article-c-comment-reply{
+    text-align: right;
+    margin-top: 15px;
+  }
+  .article-c-comment-item {
+    padding-top: 5px;
   }
   .detail-icon{
     font-size: 30px;

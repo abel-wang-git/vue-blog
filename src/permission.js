@@ -22,7 +22,6 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
     if (to.path === '/login') {
-      // if is logged in, redirect to the home page
       next({ path: '/dashboard' })
       NProgress.done()
     } else {
@@ -33,7 +32,6 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           const { roles } = await store.dispatch('user/getInfo')
-
           // generate accessible routes map based on roles
           const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           // dynamically add accessible routes
