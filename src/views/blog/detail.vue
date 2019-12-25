@@ -48,14 +48,11 @@
             <el-avatar :size="35" :src="item.avatar" />
             <div class="article-comment-user">
               <div>{{ item.name }}</div>
-              <div>{{ item.createTime }}</div>
+              <div>{{ item.createTime.substring(0,10) }}</div>
             </div>
           </div>
           <div class="comment-recomment">
             <div @click="openComment(item.commentId)">回复</div>
-            <div>
-              <svg-icon icon-class="like" />
-            </div>
           </div>
         </el-col>
         <el-col :span="22" :offset="1" class="article-comment-item ">
@@ -68,17 +65,14 @@
             <div v-for="(replyitem, i) in item.reply" :key="i" class="article-c-comment-item">
               <div class="article-comment-item-child">
                 <div style="display: flex;">
-                  <el-avatar :size="35" />
+                  <el-avatar :size="35" :src="replyitem.avatar"  />
                   <div class="article-comment-user">
-                    <div>{{ item.name +' 回复 '+ replyitem.replyName }}</div>
-                    <div>{{ item.createTime.substring(0,10) }}</div>
+                    <div>{{ replyitem.name +' 回复 '+ replyitem.replyName }}</div>
+                    <div>{{ replyitem.createTime.substring(0,10) }}</div>
                   </div>
                 </div>
                 <div class="comment-recomment">
                   <div @click="openComment(replyitem.commentId)">回复</div>
-                  <div>
-                    <svg-icon icon-class="like" />
-                  </div>
                 </div>
               </div>
               <div class="article-c-comment">
@@ -319,6 +313,7 @@ export default {
     registered() {
       this.$refs.registeredForm.validate(valid => {
         if (valid) {
+          this.loginForm.avatar = this.avatars[this.avatarIndex]
           this.$store.dispatch('user/registered', this.loginForm).then(() => {
             this.loginVisible = false
           })
@@ -378,9 +373,7 @@ export default {
       }
     },
     choseAvatar(avatar, index) {
-      this.loginForm.avatar = avatar
       this.avatarIndex = index
-      console.log(this.avatarIndex)
     }
   }
 }
@@ -419,7 +412,6 @@ export default {
 
   .detail-content {
     position: relative;
-    /*top: -40vh;*/
     padding: 10px 40px;
     margin-top: 10vh;
     min-height: 90vh;
@@ -431,7 +423,6 @@ export default {
     text-align: center;
     height: 40px;
     line-height: 40px;
-    position: absolute;
     bottom: 20px;
     width: 100%;
   }
@@ -465,6 +456,7 @@ export default {
   .article-comment-item-border {
     border-left: solid 3px rgba(119, 119, 119, 0.56);
     margin-top: 10px;
+    border-top: dotted 1px rgba(119, 119, 119, 0.56);
   }
 
   .article-comment-user {
