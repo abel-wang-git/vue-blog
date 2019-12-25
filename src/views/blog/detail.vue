@@ -58,7 +58,7 @@
         <el-col :span="22" :offset="1" class="article-comment-item ">
           {{ item.comment }}
           <el-col v-if="replyCommentId === item.commentId" class="article-c-comment-reply">
-            <el-input v-model="comment" type="textarea" rows="3" :placeholder=" '回复:' + item.name" />
+            <el-input v-model="reply" type="textarea" rows="2" :placeholder=" '回复:' + item.name" />
             <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(item.commentId)">回复</el-button>
           </el-col>
           <el-col v-if="item.reply" :span="24" class="article-comment-item-border">
@@ -76,11 +76,11 @@
                 </div>
               </div>
               <div class="article-c-comment">
+                {{ replyitem.comment }}
                 <el-col v-if="replyCommentId === replyitem.commentId" class="article-c-comment-reply">
-                  <el-input v-model="comment" type="textarea" rows="3" :placeholder=" '回复:' + replyitem.name" />
+                  <el-input v-model="reply" type="textarea" rows="2" :placeholder=" '回复:' + replyitem.name" />
                   <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(replyitem.commentId)">回复</el-button>
                 </el-col>
-                {{ replyitem.comment }}
               </div>
             </div>
           </el-col>
@@ -230,6 +230,7 @@ export default {
       commentList: {},
       content: '',
       comment: '',
+      reply: '',
       replyCommentId: '',
       loginVisible: false,
       loginForm: {
@@ -323,17 +324,23 @@ export default {
     addComment(pid) {
       const comment = {}
       comment.articleId = this.list.articleId
-      comment.comment = this.comment
+      if (this.comment) {
+        comment.comment = this.comment
+      } else {
+        comment.comment = this.reply
+      }
       comment.pId = pid
       ArticleApi.addComment(comment).then(response => {
         if (response.code === 200) {
           this.comment = null
+          this.reply = null
           this.listComment()
           Message({
             message: '评论成功',
             type: 'success',
             duration: 2 * 1000
           })
+          this.replyCommentId = null
         }
         if (response.code === 200403) {
           this.loginVisible = true
