@@ -412,7 +412,7 @@ export default {
 
   .detail-content {
     position: relative;
-    padding: 10px 40px;
+    padding: 10px 40px 60px 40px;
     margin-top: 10vh;
     min-height: 90vh;
     background-color: white;
@@ -422,9 +422,10 @@ export default {
   .detail-bottom {
     text-align: center;
     height: 40px;
+    position: absolute;
     line-height: 40px;
     bottom: 20px;
-    width: 100%;
+    width: calc(100% - 80px);
   }
 
   .article-comment {
