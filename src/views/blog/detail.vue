@@ -40,7 +40,11 @@
     >
       <el-col style="text-align: right;margin-bottom: 10px">
         <el-input v-model="comment" type="textarea" rows="3" placeholder="输入评论内容" />
-        <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(0)">评论</el-button>
+        <div class="article-detail-comment-bottom">
+          <span v-if="commentError" class="article-detail-comment-error">评论内容不能为空</span>
+          <span v-else />
+          <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(0)">评论</el-button>
+        </div>
       </el-col>
       <el-col v-for="(item, index) in commentList" :key="index" class="comment-list">
         <el-col :span="22" :offset="1" class="article-comment">
@@ -59,13 +63,17 @@
           {{ item.comment }}
           <el-col v-if="replyCommentId === item.commentId" class="article-c-comment-reply">
             <el-input v-model="reply" type="textarea" rows="2" :placeholder=" '回复:' + item.name" />
-            <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(item.commentId)">回复</el-button>
+            <div class="article-detail-comment-bottom">
+              <span v-if="replyError" class="article-detail-comment-error">评论内容不能为空</span>
+              <span v-else />
+              <el-button size="small" type="primary" style="margin-top: 10px;" @click="addComment(item.commentId)">回复</el-button>
+            </div>
           </el-col>
           <el-col v-if="item.reply" :span="24" class="article-comment-item-border">
             <div v-for="(replyitem, i) in item.reply" :key="i" class="article-c-comment-item">
               <div class="article-comment-item-child">
                 <div style="display: flex;">
-                  <el-avatar :size="35" :src="replyitem.avatar"  />
+                  <el-avatar :size="35" :src="replyitem.avatar" />
                   <div class="article-comment-user">
                     <div>{{ replyitem.name +' 回复 '+ replyitem.replyName }}</div>
                     <div>{{ replyitem.createTime.substring(0,10) }}</div>
@@ -232,6 +240,8 @@ export default {
       comment: '',
       reply: '',
       replyCommentId: '',
+      commentError: false,
+      replyError: false,
       loginVisible: false,
       loginForm: {
         username: '',
@@ -329,6 +339,14 @@ export default {
       } else {
         comment.comment = this.reply
       }
+      if (!comment.comment) {
+        if (pid === 0) {
+          this.commentError = true
+        } else {
+          this.replyError = true
+        }
+        return
+      }
       comment.pId = pid
       ArticleApi.addComment(comment).then(response => {
         if (response.code === 200) {
@@ -348,6 +366,8 @@ export default {
       })
     },
     openComment(pid) {
+      this.commentError = false
+      this.replyError = false
       this.replyCommentId = pid
     },
     listComment() {
@@ -519,5 +539,14 @@ export default {
   }
   .article-c-comment-item{
     padding-top: 5px;
+  }
+  .article-detail-comment-error{
+    color: red;
+    font-size: 0.5rem;
+  }
+  .article-detail-comment-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
