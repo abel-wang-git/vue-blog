@@ -386,6 +386,7 @@ export default {
             type: 'success',
             duration: 2 * 1000
           })
+          this.isLike = true
         }
         if (response.code === 200403) {
           this.loginVisible = true
