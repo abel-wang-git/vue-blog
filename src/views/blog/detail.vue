@@ -207,6 +207,7 @@
 import ArticleApi from '@/api/article'
 import '@/styles/content-styles.css'
 import { mapGetters } from 'vuex'
+import 'element-ui/lib/theme-chalk/display.css'
 
 import Prism from 'prismjs'
 import { Message } from 'element-ui'
@@ -415,6 +416,8 @@ export default {
     text-align: center;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-bottom:  4px solid transparent;
+    border-image: radial-gradient(150px circle, #141416, rgba(255, 255, 255, 0)) 100 20;
   }
 
   .article-detail {
@@ -440,13 +443,24 @@ export default {
     width: 100%;
   }
 
-  .detail-content {
-    position: relative;
-    padding: 10px 40px 60px 40px;
-    margin-top: 10vh;
-    min-height: 90vh;
-    background-color: white;
-    z-index: 100;
+  @media screen and (min-width: 700px) {
+    .detail-content {
+      position: relative;
+      padding: 10px 40px 60px 40px;
+      margin-top: 10vh;
+      min-height: 90vh;
+      background-color: white;
+      z-index: 100;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .detail-content {
+      position: relative;
+      padding: 10px 10px 60px 10px;
+      min-height: 100vh;
+      background-color: white;
+      z-index: 100;
+    }
   }
 
   .detail-bottom {
