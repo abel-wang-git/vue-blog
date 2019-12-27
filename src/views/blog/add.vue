@@ -28,7 +28,7 @@
               <el-col class="article-types" style="display: inline-block" :span="16">
                 <el-form-item label="文章分类">
                   <el-radio-group v-model="article.classId">
-                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{item.className}}</el-radio>
+                    <el-radio v-for="(item, index) in classOption" :key="index" :label="item.classId">{{ item.className }}</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否公开">
@@ -39,8 +39,8 @@
                 </el-form-item>
                 <el-form-item label="是否置顶">
                   <el-radio-group v-model="article.top">
-                    <el-radio :label="1">置顶</el-radio>
                     <el-radio :label="0">不置顶</el-radio>
+                    <el-radio :label="1">置顶</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </el-col>
@@ -87,7 +87,17 @@ export default {
         content: '',
         classId: '',
         id: '',
-        coverPicture: ''
+        coverPicture: '',
+        status: 1,
+        top: 0
+      },
+      addtip: {
+        title: '标题',
+        content: '内容',
+        classId: '文章分类',
+        coverPicture: '封面图片',
+        top: '置顶',
+        status: '是否公开'
       },
       articleClass: null,
       token: null,
@@ -145,35 +155,46 @@ export default {
     },
 
     onSubmit: function() {
-      this.$refs.article.validate(valid => {
-        if (valid) {
-          if (!this.article.id) {
-            ArticleApi.save(this.article).then(response => {
-              Message({
-                message: response.message || 'success',
-                type: 'success',
-                duration: 2 * 1000
-              })
-              if (response.code === 200) {
-                this.article.id = response.data
-                this.$router.go(-1)
-              }
+      for (const a in this.article) {
+        if (!this.article[a] && a !== 'id') {
+          this.$msgbox({
+            message: this.addtip[a] + '不能为空',
+            showConfirmButton: false,
+            center: true
+          }).then(action => {
+            this.$message({
+              type: 'info',
+              message: 'action: ' + action
             })
-          } else {
-            ArticleApi.update(this.article).then(response => {
-              Message({
-                message: response.message || 'success',
-                type: 'success',
-                duration: 2 * 1000
-              })
-              if (response.code === 200) {
-                this.article.id = response.data
-                this.$router.go(-1)
-              }
-            })
-          }
+          })
+          return
         }
-      })
+      }
+      if (!this.article.id) {
+        ArticleApi.save(this.article).then(response => {
+          Message({
+            message: response.message || 'success',
+            type: 'success',
+            duration: 2 * 1000
+          })
+          if (response.code === 200) {
+            this.article.id = response.data
+            this.$router.go(-1)
+          }
+        })
+      } else {
+        ArticleApi.update(this.article).then(response => {
+          Message({
+            message: response.message || 'success',
+            type: 'success',
+            duration: 2 * 1000
+          })
+          if (response.code === 200) {
+            this.article.id = response.data
+            this.$router.go(-1)
+          }
+        })
+      }
     },
     openAddDialog() {
       this.articleClass = null
