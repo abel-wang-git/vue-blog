@@ -42,7 +42,7 @@
                   <div class="blog-detail">
                     <span class="blog-detail-icon">
                       <svg-icon icon-class="chat" />
-                      0
+                      {{ article.comments === null? 0: article.comments }}
                     </span>
                     <span class="blog-detail-icon">
                       <svg-icon icon-class="hot" />
@@ -50,7 +50,7 @@
                     </span>
                     <span class="blog-detail-icon">
                       <svg-icon icon-class="like" />
-                      0
+                      {{ article.likes === null? 0: article.likes }}
                     </span>
                   </div>
                   <div class="blog-time">{{ article.createTime.substring(0,10) }}</div>

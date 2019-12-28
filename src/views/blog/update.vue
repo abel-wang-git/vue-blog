@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="article" :model="article" :rules="rules" label-width="120px">
+    <el-form ref="article" :model="article" label-width="120px">
       <div class="article-add-content">
         <el-row>
           <el-col :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
@@ -81,14 +81,16 @@ export default {
       article: {
         content: ''
       },
+      addtip: {
+        title: '标题',
+        content: '内容',
+        classId: '文章分类',
+        coverPicture: '封面图片',
+        top: '置顶',
+        status: '是否公开'
+      },
       token: null,
       articleClass: null,
-      rules: {
-        title: [{ required: true, message: '请添加标题', trigger: 'blur' }],
-        classId: [{ required: true, message: '请选择分类', trigger: 'blur' }],
-        coverPicture: [{ required: true, message: '封面不能为空', trigger: 'blur' }],
-        content: [{ required: true, message: '内容不能为空', trigger: 'blur' }]
-      },
       classOption: [],
       dialogVisible: false,
       dialogPreview: false
@@ -137,16 +139,27 @@ export default {
     },
 
     onSubmit: function() {
-      this.$refs.article.validate(valid => {
-        if (valid) {
-          ArticleApi.update(this.article).then(response => {
-            if (response.code === 200) {
-              Message({
-                message: response.message || 'success',
-                type: 'success',
-                duration: 2 * 1000
-              })
-            }
+      for (const a in this.article) {
+        if (!this.article[a] && a !== 'id') {
+          this.$msgbox({
+            message: this.addtip[a] + '不能为空',
+            showConfirmButton: false,
+            center: true
+          }).then(action => {
+            this.$message({
+              type: 'info',
+              message: 'action: ' + action
+            })
+          })
+          return
+        }
+      }
+      ArticleApi.update(this.article).then(response => {
+        if (response.code === 200) {
+          Message({
+            message: response.message || 'success',
+            type: 'success',
+            duration: 2 * 1000
           })
         }
       })

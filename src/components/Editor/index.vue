@@ -68,7 +68,6 @@ export default {
           Alignment,
           Heading,
           EasyImage,
-          // CKFinder,
           MediaEmbed,
           Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize,
           // PasteFromOffice,
@@ -80,8 +79,7 @@ export default {
         toolbar: {
           items: [
             'heading',
-            'bold',
-            'italic',
+            'outdent', 'indent',
             'link',
             'undo',
             'redo',
@@ -90,15 +88,15 @@ export default {
             'highlight',
             'blockQuote',
             'imageUpload',
-            // 'ckfinder',
             'mediaEmbed',
             'todoList',
             'numberedList',
             'bulletedList',
+            'bold',
+            'italic',
             'insertTable',
             'removeFormat',
             'pageBreak',
-            'outdent', 'indent',
             'horizontalLine',
             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
           ]
@@ -106,31 +104,18 @@ export default {
         // viewportTopOffset: 50,
         codeBlock: {
           languages: [
-            { language: 'css', label: 'CSS' },
-            { language: 'xml', label: 'HTML/XML' },
             { language: 'java', label: 'java' },
-            { language: 'html', label: 'html' },
+            { language: 'shell', label: 'shell' },
+            { language: 'dart', label: 'dart' },
             { language: 'python', label: 'python' },
             { language: 'javascript', label: 'js' },
-            { language: 'dart', label: 'dart' }
-          ]
-        },
-        highlight: {
-          options: [
-            {
-              model: 'greenMarker',
-              class: 'marker-green',
-              title: 'Green marker',
-              color: 'var(--ck-highlight-marker-green)',
-              type: 'marker'
-            },
-            {
-              model: 'redPen',
-              class: 'pen-red',
-              title: 'Red pen',
-              color: 'var(--ck-highlight-pen-red)',
-              type: 'pen'
-            }
+            { language: 'sql', label: 'sql' },
+            { language: 'css', label: 'CSS' },
+            { language: 'xml', label: 'HTML/XML' },
+            { language: 'html', label: 'html' },
+            { language: 'git', label: 'git' },
+            { language: 'properties', label: 'properties' },
+            { language: 'json', label: 'json' }
           ]
         },
         fontFamily: {
@@ -144,15 +129,6 @@ export default {
           toolbar: ['imageTextAlternative', '|', 'imageStyle:full', 'imageStyle:side', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight'],
           styles: ['full', 'side', 'alignLeft', 'alignCenter', 'alignRight']
         },
-        ckfinder: {
-          // Upload the images to the server using the CKFinder QuickUpload command.
-          uploadUrl: 'http://localhost:8080/upload',
-
-          // Define the CKFinder configuration (if necessary).
-          options: {
-            resourceType: 'Images'
-          }
-        },
         mediaEmbed: {
 
         },
@@ -164,18 +140,9 @@ export default {
             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
             { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
             { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-            {
-              model: 'headingFancy',
-              view: {
-                name: 'h2',
-                classes: 'fancy'
-              },
-              title: 'Heading 2 (fancy)',
-              class: 'ck-heading_heading2_fancy',
-
-              // It needs to be converted before the standard 'heading2'.
-              converterPriority: 'high'
-            }
+            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+            { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+            { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' }
           ]
         },
         wordCount: {
