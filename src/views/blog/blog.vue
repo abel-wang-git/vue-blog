@@ -12,6 +12,14 @@
           <div class="index-title">程序员的博客</div>
           <div class="index-title2">君子务本，本立而道生</div>
         </el-col>
+        <div class="article-index-bar">
+          <a class="article-index-bar-item" href="https://github.com/wanghuiwen1" target="_blank">
+            <svg-icon icon-class="github" />
+          </a>
+          <span v-if="isLogin()" class="article-index-bar-item" @click="loginVisible=true">
+            <svg-icon icon-class="login" />
+          </span>
+        </div>
       </div>
       <div class="article-list">
         <el-col
@@ -53,7 +61,7 @@
                       {{ article.likes === null? 0: article.likes }}
                     </span>
                   </div>
-                  <div class="blog-time">{{ article.createTime.substring(0,10) }}</div>
+                  <div class="blog-time">{{ article.createTime!=null ?article.createTime.substring(0,10):'-' }}</div>
                 </div>
               </div>
             </div>
@@ -77,21 +85,29 @@
         <svg-icon icon-class="add" class="add-icon" />
       </div>
     </div>
+    <el-dialog title="请先登录" :visible.sync="loginVisible" :width="dialogWidth">
+      <login :visible="loginVisible" @setVisible="setVisible" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Login from './login'
 import ArticleApi from '@/api/article'
 import Velocity from 'velocity-animate'
 import checkPermission from '@/utils/permission'
+import store from '@/store'
 
 export default {
   name: 'BlogList',
+  components: { Login },
   data() {
     return {
       pox: 0,
       articles: [],
-      items: []
+      items: [],
+      loginVisible: false,
+      dialogWidth: '0'
     }
   },
   mounted() {
@@ -102,9 +118,26 @@ export default {
         }
       }
     })
+    window.onresize = () => {
+      return (() => {
+        this.setDialogWidth()
+      })()
+    }
+    if (document.body.clientWidth < 768) {
+      this.dialogWidth = '100%'
+    } else {
+      this.dialogWidth = '400px'
+    }
   },
   methods: {
     checkPermission,
+    isLogin() {
+      const token = store.getters && store.getters.token
+      if (token) {
+        return false
+      }
+      return true
+    },
     detail(id) {
       this.$router.push({ path: '/article/detail', query: { id: id }})
     },
@@ -144,6 +177,18 @@ export default {
           { complete: done }
         )
       }, delay)
+    },
+    setDialogWidth() {
+      var val = document.body.clientWidth
+      const def = 800 // 默认宽度
+      if (val < def) {
+        this.dialogWidth = '100%'
+      } else {
+        this.dialogWidth = def + 'px'
+      }
+    },
+    setVisible(val) {
+      this.loginVisible = val
     }
   }
 }
@@ -172,6 +217,7 @@ export default {
     background-color: #1f2d3d;
     height: 50vh;
     width: 100vw;
+    position: relative;
   }
 
   .index-title {
@@ -214,6 +260,7 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: rgba(27, 27, 27, 0.84);
   }
 
   .blog-detail {
@@ -225,7 +272,7 @@ export default {
   }
 
   .blog-time {
-    color:#8a8a8a;
+    color: #8a8a8a;
     padding-top: 5px;
     font-size: 0.7rem;
     padding-left: 1rem;
@@ -285,5 +332,17 @@ export default {
     line-height: 50px;
     text-align: center;
     cursor: pointer;
+  }
+  .article-index-bar{
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    height: 2rem;
+    line-height: 2rem;
+  }
+  .article-index-bar-item{
+    font-size: 1.5rem;
+    color: white;
   }
 </style>

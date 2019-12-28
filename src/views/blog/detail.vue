@@ -14,11 +14,26 @@
       :lg="{span: 16, offset: 4}"
       :xl="{span: 12, offset: 6}"
     >
-      <div class="article-title" style="">{{ list.title }}</div>
+      <div class="article-title" style="">
+        {{ list.title }}
+        <div class="article-detail-author">
+          <div style="display: flex;align-items: center">
+            <el-avatar :size="20" :src="author.avatar" />
+            <div style="padding-left: 10px">
+              <div>{{ author.nickname }} &nbsp;</div>
+            </div>
+              <div>发布于{{ list.createTime!=null ?list.createTime.substring(0,10):'-' }}</div>
+          </div>
+          <router-link v-if="checkPermission(['admin'])" :to="{path:'/article/update',query:{id: list.articleId}}">
+            <div class="article-detail-author-editor">
+              编辑
+            </div>
+          </router-link>
+        </div>
+      </div>
       <div class="ck-content" v-html="content.content" />
       <div class="detail-bottom">
         <span class="blog-detail-icon" :style="{color: isLike ? '#ff3918' : '#8a8a8a' }" @click="like()">
-<!--          <svg-icon v-if="list.isLike" icon-class="like" class-name="detail-icon" />-->
           <svg-icon icon-class="like" class-name="detail-icon" />
         </span>
         <el-tooltip effect="light" placement="bottom">
@@ -104,100 +119,7 @@
       :xl="{span: 12, offset: 6}"
     >
       <el-dialog title="请先登录" :visible.sync="loginVisible" :width="dialogWidth">
-        <el-form v-if="loginType===1" ref="loginForm" :rules="rules" :model="loginForm" auto-complete="on">
-          <el-form-item prop="username">
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              placeholder="用户名"
-              name="username"
-              type="text"
-              tabindex="1"
-              auto-complete="on"
-              prefix-icon="el-icon-s-custom"
-            />
-          </el-form-item>
-
-          <el-form-item prop="password">
-            <el-input
-              ref="password"
-              v-model="loginForm.password"
-              type="password"
-              placeholder="密码"
-              name="password"
-              tabindex="2"
-              auto-complete="on"
-              prefix-icon="el-icon-key"
-            />
-          </el-form-item>
-          <a @click="loginType=2">注册</a>
-          <div style="text-align: center">
-            <el-button size="mini" type="primary" @click="loginUser()">登录</el-button>
-            <el-button size="mini" @click="loginVisible=false">取消</el-button>
-          </div>
-        </el-form>
-        <el-form v-if="loginType===2" ref="registeredForm" :rules="rules" :model="loginForm" auto-complete="on">
-          <el-row :gutter="5">
-            <el-col v-for="(avatar, index) in avatars" :key="index" :span="3">
-              <img :class="[index===avatarIndex? 'detail-avatar-chose': 'detail-avatar']" :src="avatar" @click="choseAvatar(avatar,index)">
-            </el-col>
-          </el-row>
-          <el-form-item prop="username">
-            <el-input
-              ref="username"
-              v-model="loginForm.username"
-              placeholder="登录邮箱"
-              name="username"
-              type="text"
-              tabindex="1"
-              auto-complete="on"
-              prefix-icon="el-icon-s-custom"
-            />
-          </el-form-item>
-
-          <el-form-item prop="nickname">
-            <el-input
-              ref="username"
-              v-model="loginForm.nickname"
-              placeholder="昵称"
-              name="username"
-              type="text"
-              tabindex="1"
-              auto-complete="on"
-              prefix-icon="el-icon-user"
-            />
-          </el-form-item>
-
-          <el-form-item prop="password">
-            <el-input
-              ref="password"
-              v-model="loginForm.password"
-              type="password"
-              placeholder="密码"
-              name="password"
-              tabindex="2"
-              auto-complete="on"
-              prefix-icon="el-icon-key"
-            />
-          </el-form-item>
-          <el-form-item prop="repassword">
-            <el-input
-              ref="password"
-              v-model="loginForm.repassword"
-              type="password"
-              placeholder="重复密码"
-              name="password"
-              tabindex="2"
-              auto-complete="on"
-              prefix-icon="el-icon-key"
-            />
-          </el-form-item>
-          <a @click="loginType=1">登录</a>
-          <div style="text-align: center">
-            <el-button size="mini" type="primary" @click="registered()">注册</el-button>
-            <el-button size="mini" @click="loginVisible=false">取消</el-button>
-          </div>
-        </el-form>
+        <login :visible="loginVisible" @setVisible="setVisible" />
       </el-dialog>
     </el-col>
   </el-row>
@@ -208,35 +130,19 @@ import ArticleApi from '@/api/article'
 import '@/styles/content-styles.css'
 import { mapGetters } from 'vuex'
 import 'element-ui/lib/theme-chalk/display.css'
+import checkPermission from '@/utils/permission'
 
 import Prism from 'prismjs'
 import { Message } from 'element-ui'
-import { checkEmail } from '../../utils/validate'
+import Login from './login'
 
 export default {
   name: 'Detail',
+  components: { Login },
   data() {
-    const validPassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
-      } else {
-        if (this.loginForm.repassword !== '') {
-          this.$refs.registeredForm.validateField('repassword')
-        }
-        callback()
-      }
-    }
-    const validRePassword = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请再次输入密码'))
-      } else if (value !== this.loginForm.password) {
-        callback(new Error('两次输入密码不一致!'))
-      } else {
-        callback()
-      }
-    }
     return {
       list: {},
+      author: {},
       isLike: false,
       commentList: {},
       content: '',
@@ -246,45 +152,8 @@ export default {
       commentError: false,
       replyError: false,
       loginVisible: false,
-      loginForm: {
-        username: '',
-        password: '',
-        nickname: '',
-        repassword: '',
-        avatar: ''
-      },
-      avatarIndex: 0,
       loginType: 1,
-      dialogWidth: '0',
-      avatars: [
-        require('@/assets/blog/avatar1.png'),
-        require('@/assets/blog/avatar2.png'),
-        require('@/assets/blog/avatar3.png'),
-        require('@/assets/blog/avatar4.png'),
-        require('@/assets/blog/avatar5.png'),
-        require('@/assets/blog/avatar6.png'),
-        require('@/assets/blog/avatar7.png'),
-        require('@/assets/blog/avatar8.png')
-      ],
-      rules: {
-        username: [
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
-          { validator: checkEmail, trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
-          { validator: validPassword, trigger: 'blur' }
-        ],
-        nickname: [
-          { required: true, message: '请输入昵称', trigger: 'blur' }
-        ],
-        repassword: [
-          { required: true, message: '请输再次入密码', trigger: 'blur' },
-          { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
-          { validator: validRePassword, trigger: 'blur' }
-        ]
-      }
+      dialogWidth: '0'
     }
   },
   computed: {
@@ -297,6 +166,7 @@ export default {
       if (response.code === 200) {
         this.list = response.data.list
         this.isLike = response.data.isLike
+        this.author = response.data.author
         this.content = response.data.content
         this.listComment()
       }
@@ -316,25 +186,7 @@ export default {
     Prism.highlightAll()
   },
   methods: {
-    loginUser() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.loginVisible = false
-          })
-        }
-      })
-    },
-    registered() {
-      this.$refs.registeredForm.validate(valid => {
-        if (valid) {
-          this.loginForm.avatar = this.avatars[this.avatarIndex]
-          this.$store.dispatch('user/registered', this.loginForm).then(() => {
-            this.loginVisible = false
-          })
-        }
-      })
-    },
+    checkPermission,
     addComment(pid) {
       const comment = {}
       comment.articleId = this.list.articleId
@@ -403,8 +255,8 @@ export default {
         this.dialogWidth = def + 'px'
       }
     },
-    choseAvatar(avatar, index) {
-      this.avatarIndex = index
+    setVisible(val) {
+      this.loginVisible = val
     }
   }
 }
@@ -415,9 +267,10 @@ export default {
     font-size: 2rem;
     text-align: center;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
     border-bottom:  4px solid transparent;
-    border-image: radial-gradient(150px circle, #141416, rgba(255, 255, 255, 0)) 100 20;
+    border-image: radial-gradient(circle, #141416, rgba(255, 255, 255, 0)) 100 20;
+    color: rgba(27, 27, 27, 0.84);
   }
 
   .article-detail {
@@ -542,14 +395,7 @@ export default {
   .el-dialog__body{
     padding: 10px 20px !important;
   }
-  .detail-avatar{
-    width: 100%;
-    border: dashed 1px #5d9d45 ;
-  }
-  .detail-avatar-chose{
-    width: 100%;
-    border: solid 2px #5d9d45 ;
-  }
+
   .article-c-comment-reply{
     text-align: right;
     margin-top: 15px;
@@ -565,5 +411,15 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .article-detail-author{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: rgba(27, 27, 27, 0.84);
+  }
+
+  .article-detail-author-editor{
+    color: #202fff;
   }
 </style>

@@ -300,4 +300,10 @@
 
 .ck-content p {
   line-height: 1.8;
+  color: rgba(27, 27, 27, 0.84);
+}
+
+.ck-content ul li {
+  line-height: 1.8;
+  color: rgba(27, 27, 27, 0.84);
 }

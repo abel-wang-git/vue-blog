@@ -82,6 +82,7 @@ export default {
         content: ''
       },
       addtip: {
+        articleId: 'id',
         title: '标题',
         content: '内容',
         classId: '文章分类',
@@ -140,16 +141,11 @@ export default {
 
     onSubmit: function() {
       for (const a in this.article) {
-        if (!this.article[a] && a !== 'id') {
+        if (this.article[a] === '') {
           this.$msgbox({
             message: this.addtip[a] + '不能为空',
             showConfirmButton: false,
             center: true
-          }).then(action => {
-            this.$message({
-              type: 'info',
-              message: 'action: ' + action
-            })
           })
           return
         }
