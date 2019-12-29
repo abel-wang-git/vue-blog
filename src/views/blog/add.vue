@@ -76,7 +76,6 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
-import '@/styles/ck-styles.css'
 
 export default {
   components: { Editor },
