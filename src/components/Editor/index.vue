@@ -174,9 +174,6 @@ export default {
 }
 </script>
 <style>
-  .ck-editor__editable {
-    min-height: 600px !important;
-  }
   .ck-content{
     min-height: 600px !important;
   }
