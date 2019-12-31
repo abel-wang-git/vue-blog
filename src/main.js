@@ -17,6 +17,9 @@ import '@/permission' // permission control
 
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
+import animated from 'animate.css'
+
+Vue.use(animated)
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
 Vue.config.productionTip = false

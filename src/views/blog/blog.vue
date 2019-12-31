@@ -1,89 +1,86 @@
 <template>
   <div class="article">
-    <div class="">
-      <div class="index-header">
-        <el-col
-          :xs="{span: 24, offset: 0}"
-          :sm="{span: 24, offset: 0}"
-          :md="{span: 16, offset: 4}"
-          :lg="{span: 16, offset: 4}"
-          :xl="{span: 12, offset: 6}"
-        >
-          <div class="index-title">程序员的博客</div>
-          <div class="index-title2">君子务本，本立而道生</div>
-        </el-col>
-        <div class="article-index-bar">
-          <a class="article-index-bar-item" href="https://github.com/wanghuiwen1" target="_blank">
-            <svg-icon icon-class="github" />
-          </a>
-          <span v-if="isLogin()" class="article-index-bar-item" @click="loginVisible=true">
-            <svg-icon icon-class="login" />
-          </span>
-        </div>
-      </div>
-      <div class="article-list">
-        <el-col
-          :xs="{span: 24, offset: 0}"
-          :sm="{span: 24, offset: 0}"
-          :md="{span: 20, offset: 2}"
-          :lg="{span: 18, offset: 3}"
-          :xl="{span: 18, offset: 3}"
-        >
-          <el-col
-            v-for="article in articles"
-            :key="article.articleId"
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
-            :lg="{span: 6}"
-            :xl="{span: 6}"
-            style="padding: 10px;"
-          >
-            <div class="article-card" @click="detail(article.articleId)">
-              <div class="article-card-content">
-                <img
-                  :src="article.coverPicture"
-                  style="width: 100%"
-                >
-                <div class="article-bottom">
-                  <div class="blog-title">{{ article.title }}</div>
-                  <div class="blog-detail">
-                    <span class="blog-detail-icon">
-                      <svg-icon icon-class="chat" />
-                      {{ article.comments === null? 0: article.comments }}
-                    </span>
-                    <span class="blog-detail-icon">
-                      <svg-icon icon-class="hot" />
-                      {{ article.hot === null? 0: article.hot }}
-                    </span>
-                    <span class="blog-detail-icon">
-                      <svg-icon icon-class="like" />
-                      {{ article.likes === null? 0: article.likes }}
-                    </span>
-                  </div>
-                  <div class="blog-time">{{ article.createTime!=null ?article.createTime.substring(0,10):'-' }}</div>
-                </div>
-              </div>
-            </div>
-          </el-col>
-        </el-col>
-      </div>
-      <transition-group
-        name="staggered-fade"
-        tag="div"
-        class="bottom-menu"
-        :css="false"
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @leave="leave"
+    <div class="index-header animated fadeInDown delay-2s">
+      <el-col
+        :xs="{span: 24, offset: 0}"
+        :sm="{span: 24, offset: 0}"
+        :md="{span: 16, offset: 4}"
+        :lg="{span: 16, offset: 4}"
+        :xl="{span: 12, offset: 6}"
       >
-        <div v-for="item in items" :key="item" class="menu-list" @click="menu(item)">
-          {{ item }}
-        </div>
-      </transition-group>
-      <div v-if="checkPermission(['admin'])" class="add-bottom" @click="add()">
-        <svg-icon icon-class="add" class="add-icon" />
+        <div class="index-title">程序员的博客</div>
+        <div class="index-title2">君子务本，本立而道生</div>
+      </el-col>
+      <div class="article-index-bar">
+        <a class="article-index-bar-item" href="https://github.com/wanghuiwen1" target="_blank">
+          <svg-icon icon-class="github" />
+        </a>
+        <span v-if="isLogin()" class="article-index-bar-item" @click="loginVisible=true">
+          <svg-icon icon-class="login" />
+        </span>
       </div>
+    </div>
+    <el-col
+      :xs="{span: 24, offset: 0}"
+      :sm="{span: 24, offset: 0}"
+      :md="{span: 20, offset: 2}"
+      :lg="{span: 18, offset: 3}"
+      :xl="{span: 18, offset: 3}"
+    >
+      <el-col
+        v-for="article in articles"
+        :key="article.articleId"
+        :xs="{span: 24}"
+        :sm="{span: 12}"
+        :md="{span: 8}"
+        :lg="{span: 6}"
+        :xl="{span: 6}"
+        style="padding: 10px;"
+        class="animated fadeInUp delay-2s"
+      >
+        <div class="article-card" @click="detail(article.articleId)">
+          <div class="article-card-content">
+            <img
+              :src="article.coverPicture"
+              style="width: 100%"
+            >
+            <div class="article-bottom">
+              <div class="blog-title">{{ article.title }}</div>
+              <div class="blog-detail">
+                <span class="blog-detail-icon">
+                  <svg-icon icon-class="chat" />
+                  {{ article.comments === null? 0: article.comments }}
+                </span>
+                <span class="blog-detail-icon">
+                  <svg-icon icon-class="hot" />
+                  {{ article.hot === null? 0: article.hot }}
+                </span>
+                <span class="blog-detail-icon">
+                  <svg-icon icon-class="like" />
+                  {{ article.likes === null? 0: article.likes }}
+                </span>
+              </div>
+              <div class="blog-time">{{ article.createTime!=null ?article.createTime.substring(0,10):'-' }}</div>
+            </div>
+          </div>
+        </div>
+      </el-col>
+    </el-col>
+    <transition-group
+      name="staggered-fade"
+      tag="div"
+      class="bottom-menu"
+      :css="false"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @leave="leave"
+    >
+      <div v-for="item in items" :key="item" class="menu-list" @click="menu(item)">
+        {{ item }}
+      </div>
+    </transition-group>
+    <div v-if="checkPermission(['admin'])" class="add-bottom" @click="add()">
+      <svg-icon icon-class="add" class="add-icon" />
     </div>
     <el-dialog title="请先登录" :visible.sync="loginVisible" :width="dialogWidth">
       <login :visible="loginVisible" @setVisible="setVisible" />
@@ -209,12 +206,17 @@ export default {
 
   .article {
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-image: url("~@/assets/blog/background-index.png");
+    background-color: #1f2d3d;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .index-header {
-    background-image: url("~@/assets/blog/background-index.png");
+    background-color: rgba(162, 162, 162, 0.85);
     background-size: cover;
-    background-color: #1f2d3d;
     height: 50vh;
     width: 100vw;
     position: relative;
@@ -237,7 +239,7 @@ export default {
     padding-bottom: 80.25%;
     height: 0;
     position: relative;
-    border: solid 1px #929292;
+    /*border: solid 1px #929292;*/
     border-radius: 10px;
     overflow: hidden;
   }
@@ -286,10 +288,6 @@ export default {
     bottom: 0;
     background-color: white;
     width: 100%;
-  }
-
-  .article-list {
-    padding-top: 10px;
   }
 
   .blog-detail-icon {
