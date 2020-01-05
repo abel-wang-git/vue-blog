@@ -86,7 +86,7 @@ export default {
         content: '',
         classId: '',
         id: '',
-        coverPicture: '',
+        coverPicture: '1',
         status: 1,
         top: 0
       },
@@ -155,7 +155,7 @@ export default {
 
     onSubmit: function() {
       for (const a in this.article) {
-        if (!this.article[a] && a !== 'id') {
+        if (this.article[a] === '' && a !== 'id') {
           this.$msgbox({
             message: this.addtip[a] + '不能为空',
             showConfirmButton: false,
