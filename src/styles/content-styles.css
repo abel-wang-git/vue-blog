@@ -307,3 +307,27 @@
   line-height: 1.8;
   color: rgba(27, 27, 27, 0.84);
 }
+
+.ck-content a {
+  color: #20a0ff;
+}
+
+
+.marker-yellow{
+  color: red;
+}
+.marker-green{
+  color: #ff9418;
+}
+.marker-pink{
+  color: #c25aff;
+}
+.marker-blue{
+  color: #91746e;
+}
+.pen-red{
+  background-color: #d2d2d2fa !important;
+}
+.pen-green {
+  background-color: #b1a9a996 !important;
+}

@@ -147,7 +147,7 @@ export default {
         },
         wordCount: {
           onUpdate: stats => {
-            console.log(stats)
+            // console.log(stats)
           }
         }
         // autosave: {

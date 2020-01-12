@@ -76,6 +76,7 @@
 import Editor from '@/components/Editor'
 import ArticleApi from '@/api/article'
 import { Message } from 'element-ui'
+import '@/styles/content-styles.css'
 
 export default {
   components: { Editor },
@@ -206,6 +207,7 @@ export default {
 </script>
 
 <style>
+
   .avatar-uploader .el-upload {
     width: 178px;
     height: 178px;
