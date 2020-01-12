@@ -40,7 +40,7 @@ export const constantRoutes = [
     meta: { title: 'blog', icon: 'dashboard' }
   },
   {
-    path: '/article/detail',
+    path: '/article/detail/:id',
     component: () => import('@/views/blog/detail'),
     name: 'AtricleDetail',
     hidden: true,
