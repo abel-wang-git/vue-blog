@@ -44,7 +44,8 @@
             <img
               :src="article.coverPicture"
               style="width: 100%;height: 100%"
-            >
+            />
+
             <div class="article-bottom">
               <div class="blog-title">{{ article.title }}</div>
               <div class="blog-detail">
@@ -287,6 +288,7 @@ export default {
   }
 
   .article-card-content {
+    background-color: white;
     width: 100%;
     height: 100%;
     position: absolute;

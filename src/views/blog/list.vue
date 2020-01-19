@@ -78,14 +78,13 @@ export default {
     },
     nextPage() {
       this.listLoading = true
-      ArticleApi.list(({ where: '[]', page: this.page.pageNum }).then(response => {
+      ArticleApi.list({ where: '[]', page: this.page.pageNum }).then(response => {
         this.list = response.data.list
         this.page.total = response.data.total
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-      )
     }
   }
 }
