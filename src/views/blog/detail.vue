@@ -305,6 +305,14 @@ export default {
       background-color: white;
       z-index: 100;
     }
+    .detail-bottom {
+      text-align: center;
+      height: 40px;
+      position: absolute;
+      line-height: 40px;
+      bottom: 20px;
+      width: calc(100% - 80px);
+    }
   }
   @media screen and (max-width: 700px) {
     .detail-content {
@@ -314,16 +322,17 @@ export default {
       background-color: white;
       z-index: 100;
     }
+    .detail-bottom {
+      text-align: center;
+      height: 40px;
+      position: absolute;
+      line-height: 40px;
+      bottom: 20px;
+      width: calc(100% - 20px);
+    }
   }
 
-  .detail-bottom {
-    text-align: center;
-    height: 40px;
-    position: absolute;
-    line-height: 40px;
-    bottom: 20px;
-    width: calc(100% - 80px);
-  }
+
 
   .article-comment {
     justify-content: space-between;
