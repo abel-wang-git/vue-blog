@@ -174,7 +174,7 @@ export default {
       })
     },
     detail(id) {
-      this.$router.push({ path: '/article/detail', query: { id: id }})
+      this.$router.push({ path: '/article/detail/' + id })
     },
     menu(t) {
       if (t === '添加') {

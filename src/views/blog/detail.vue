@@ -162,7 +162,7 @@ export default {
     ])
   },
   mounted() {
-    ArticleApi.detail(this.$route.query).then(response => {
+    ArticleApi.detail({ id: this.$route.params.id }).then(response => {
       if (response.code === 200) {
         this.list = response.data.list
         this.isLike = response.data.isLike

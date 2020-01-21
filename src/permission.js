@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login', '/', '/article/detail'] // no redirect whitelist
+const whiteList = ['/login', '/', '/article/detail/*'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
@@ -50,13 +50,26 @@ router.beforeEach(async(to, from, next) => {
       }
     }
   } else {
-    /* has no token*/
-    if (whiteList.indexOf(to.path) !== -1) {
-      next()
-      return true
-    } else {
+    var iswhite = whiteList.some(function(item) {
+      var end = new RegExp('(.*)/')
+      if (item.endsWith('/')) {
+        item = item.replace(end, '$1/?')
+      }
+      if (!item.endsWith('*')) {
+        item += '$'
+      }
+      // item = item.replace('/', '\\/')
+      var patt = new RegExp('^' + item)
+      if (patt.test(to.path)) {
+        // in the free login whitelist, go directly
+        next()
+        return true
+      }
+    })
+    if (!iswhite) {
       next(`/login?redirect=${to.path}`)
       NProgress.done()
+      return true
     }
   }
 })

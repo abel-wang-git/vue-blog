@@ -56,7 +56,7 @@
       <el-row class="article-add-bottom">
         <el-col class="article-add" :xs="{span: 24, offset: 0}" :sm="{span: 24, offset: 0}" :md="{span: 16, offset: 4}" :lg="{span: 16, offset: 4}" :xl="{span: 12, offset: 6}">
           <el-button type="primary" @click="onSubmit">保存</el-button>
-          <router-link :to="{path:'/'}"><el-button>取消</el-button></router-link>
+          <router-link :to="{path:'/'}"><el-button>返回</el-button></router-link>
         </el-col>
       </el-row>
     </el-form>
