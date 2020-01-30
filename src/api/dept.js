@@ -1,43 +1,13 @@
 import request from '@/utils/request'
 import qs from 'qs'
 
-const RoleApi = {
+const DeptApi = {
   getList: function getList(params) {
     return request({
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      url: '/role/list',
-      method: 'post',
-      data: qs.stringify(params)
-    })
-  },
-  powerList: function powerList() {
-    return request({
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      url: '/power/list',
-      method: 'post'
-    })
-  },
-  rolePowerList: function rolePowerList(params) {
-    return request({
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      url: '/role/get/power',
-      method: 'post',
-      data: qs.stringify(params)
-    })
-  },
-
-  addPower: function addPower(params) {
-    return request({
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      url: '/role/add/power',
+      url: '/sys/department/list',
       method: 'post',
       data: qs.stringify(params)
     })
@@ -47,11 +17,30 @@ const RoleApi = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      url: '/role/add',
+      url: '/sys/department/add',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+  update: function(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/sys/department/update',
+      method: 'post',
+      data: qs.stringify(params)
+    })
+  },
+  del: function(params) {
+    return request({
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      url: '/sys/whitelist/delete',
       method: 'post',
       data: qs.stringify(params)
     })
   }
 }
-export default RoleApi
-
+export default DeptApi

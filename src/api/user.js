@@ -57,3 +57,19 @@ export function registered(params) {
     data: qs.stringify(params)
   })
 }
+
+export function save(params) {
+  return request({
+    url: '/user/add',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
+export function deptList(params) {
+  return request({
+    url: '/user/dept/list',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}

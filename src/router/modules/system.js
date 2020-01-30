@@ -24,6 +24,12 @@ const sysRouter = {
       meta: { title: '用户管理' }
     },
     {
+      path: '/sys/dept',
+      component: () => import('@/views/system/dept/list'),
+      name: 'dept',
+      meta: { title: '组织机构' }
+    },
+    {
       path: '/sys/app',
       component: () => import('@/views/system/app/list'),
       name: 'app',
