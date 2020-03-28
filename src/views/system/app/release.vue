@@ -17,9 +17,8 @@
               :headers="token"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <el-input v-model="appHistory.url" placeholder="上传apk" />
+              :before-upload="beforeAvatarUpload">
+              <el-input v-model="appHistory.url" placeholder="上传apk"/>
             </el-upload>
           </el-form-item>
         </el-col>
@@ -33,10 +32,9 @@
               :headers="token"
               :show-file-list="false"
               :on-success="qrcodeSuccess"
-              :before-upload="beforeqrcodeUpload"
-            >
+              :before-upload="beforeqrcodeUpload">
               <img v-if="appHistory.qrcode" :src="appHistory.qrcode" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
             <!--<el-input v-model="app.qrcode"/>-->
           </el-form-item>
@@ -46,8 +44,8 @@
         <el-col :span="11">
           <el-form-item label="平台">
             <el-select v-model="appHistory.platform" placeholder="平台">
-              <el-option label="Android" value="Android" />
-              <el-option label="IOS" value="IOS" />
+              <el-option label="Android" value="Android"></el-option>
+              <el-option label="IOS" value="IOS"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -70,7 +68,7 @@
         <el-button type="primary" @click="onSubmit">发布</el-button>
         <router-link to="/sys/app"><el-button type="primary">返回</el-button></router-link>
       </el-form-item>
-      <el-input v-model="appHistory.appId" type="hidden" />
+      <el-input v-model="appHistory.appId" type="hidden"/>
     </el-form>
   </div>
 </template>
@@ -107,6 +105,7 @@ export default {
             type: 'success',
             duration: 2 * 1000
           })
+          this.$router.back()
         }
       })
     },
@@ -118,7 +117,7 @@ export default {
     beforeAvatarUpload(file) {
     },
     qrcodeSuccess(res, file) {
-      this.appHistory.qrcode = res.data
+      this.appHistory.qrcode = process.env.VUE_APP_IMAGE_HOST + res.data
     },
     beforeqrcodeUpload(file) {
     }

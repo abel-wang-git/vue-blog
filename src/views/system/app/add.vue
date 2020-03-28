@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form ref="app" :model="app" label-width="120px">
+    <el-form ref="app" :model="app"  label-width="120px">
       <el-row>
         <el-col :span="11">
           <el-form-item label="app名称">
-            <el-input v-model="app.name" />
+            <el-input v-model="app.name"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -41,8 +41,9 @@ export default {
           type: 'success',
           duration: 2 * 1000
         })
+        this.$router.back()
       })
-    }
+    },
   }
 
 }

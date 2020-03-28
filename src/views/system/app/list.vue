@@ -60,7 +60,7 @@ export default {
     return {
       list: null,
       listLoading: true,
-      page: { total: 0, size: 0, pageNum: 0 }
+      page: { total: 0, size: 0, pageNum: 0 },
     }
   },
   created() {
@@ -85,7 +85,7 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-    }
+    },
   }
 }
 </script>

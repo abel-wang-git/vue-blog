@@ -61,6 +61,15 @@ export const constantRoutes = [
     meta: { title: '文章修改' }
   },
   {
+
+    path: '/app/index/:id',
+    component: () => import('@/views/system/app/index'),
+    name: 'addindex',
+    hidden: true,
+    meta: { title: 'app发布' }
+
+  },
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

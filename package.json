@@ -55,8 +55,10 @@
     "prismjs": "^1.17.1",
     "raw-loader": "^0.5.1",
     "scrollreveal": "^4.0.5",
+    "vant": "^2.5.8",
     "velocity-animate": "^2.0.5",
     "vue": "2.6.10",
+    "vue-clipboard2": "^0.3.1",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
   },

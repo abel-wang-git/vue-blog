@@ -14,7 +14,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import VueClipboard from 'vue-clipboard2'
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import animated from 'animate.css'
@@ -22,10 +22,11 @@ import animated from 'animate.css'
 Vue.use(animated)
 Vue.use(ElementUI, { locale })
 Vue.use(CKEditor)
+Vue.use(VueClipboard)
 Vue.config.productionTip = false
 
 Vue.prototype.uploadUrl = process.env.VUE_APP_BASE_API + 'img/upload'
-Vue.prototype.apkUploadUrl = process.env.VUE_APP_BASE_API + 'apk/upload'
+Vue.prototype.apkUploadUrl = process.env.VUE_APP_BASE_API + 'app/apk/upload'
 
 new Vue({
   el: '#app',
