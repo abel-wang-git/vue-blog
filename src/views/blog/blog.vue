@@ -89,7 +89,7 @@
     </el-dialog>
     <div class="article" />
 
-    <div style="bottom: 0;height: 40px;position: absolute; color: black;width: 100%;text-align: center;background-color: white">
+    <div style="bottom: 0;height: 40px;position: absolute; color: white;width: 100%;text-align: center;background-color: #8d9092;padding-top: 5px">
       <a href="http://www.beian.miit.gov.cn/" target="_blank">ICP证: 晋ICP备19013199号-1</a>
     </div>
   </div>
