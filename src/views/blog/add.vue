@@ -87,7 +87,7 @@ export default {
         content: '',
         classId: '',
         id: '',
-        coverPicture: '1',
+        coverPicture: null,
         status: 1,
         top: 0
       },

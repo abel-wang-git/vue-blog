@@ -26,7 +26,7 @@
       :md="{span: 20, offset: 2}"
       :lg="{span: 18, offset: 3}"
       :xl="{span: 18, offset: 3}"
-      style="min-height: 61vh"
+      style="min-height: 61vh;margin-bottom: 40px"
     >
       <el-col
         v-for="(article, i) in articles"
@@ -88,6 +88,10 @@
       <login :visible="loginVisible" @setVisible="setVisible" />
     </el-dialog>
     <div class="article" />
+
+    <div style="bottom: 0;height: 40px;position: absolute; color: black;width: 100%;text-align: center;background-color: white">
+      <a href="http://www.beian.miit.gov.cn/" target="_blank">ICP证: 晋ICP备19013199号-1</a>
+    </div>
   </div>
 </template>
 
